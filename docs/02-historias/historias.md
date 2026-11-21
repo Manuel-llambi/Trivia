@@ -206,8 +206,8 @@ Notas generales que aplican a todas las historias:
   - Tarjeta abierta: píldoras 0, 1, 5, 10 y "Otro"; celda "Si acertás" con "+N pulsos" y "Cobrás N total" (oculta con monto 0: el chip ya dice "Sin pulsos"); botón "Guardar".
   - Las píldoras cuyo monto supera los pulsos disponibles quedan deshabilitadas (`surface-2`, sin labio, accesibilidad "No disponible"); "Otro" sigue disponible hasta el máximo.
   - El botón de ayuda abre el `Overlay` "¿Cómo funciona la confianza?" con tres líneas: "Ganar la sesión: si hoy acertás más que el resto, cobrás tu monto por el multiplicador.", "Acertar al menos X de las 7: elegí cuántas creés que vas a acertar; cuanto más alto, más paga." y "Los pulsos que pongas se reservan al tocar Jugar la sesión. Poner 0 también vale."; un solo botón `neutral` "Entendido".
-  - "Otro" permite un monto hasta los pulsos disponibles; la suma de las dos tarjetas nunca supera la bolsa.
-  - Al tocar "Otro" se abre un `Overlay` sobre la pantalla oscurecida: título "¿Cuántos pulsos arriesgás?", campo numérico con foco automático y teclado numérico, ayuda "Podés arriesgar hasta N pulsos" en `text-muted` (N = pulsos disponibles), botones "Guardar" (`brand`) y "Cancelar" (`ghost`). Tocar fuera del aviso equivale a "Cancelar". Al guardar, la píldora "Otro" muestra el número ingresado como elegida y la celda "Si acertás" se recalcula; vacío o 0 vuelve a "Otro" con el 0 elegido.
+  - "Otro" permite un monto hasta el tope de 10 por tarjeta, sin pasar de los pulsos disponibles; la suma de las dos tarjetas nunca supera la bolsa.
+  - Al tocar "Otro" se abre un `Overlay` sobre la pantalla oscurecida: título "¿Cuántos pulsos arriesgás?", campo numérico con foco automático y teclado numérico, ayuda "Podés arriesgar hasta N pulsos" en `text-muted` (N = el menor entre los pulsos disponibles y el tope de 10), botones "Guardar" (`brand`) y "Cancelar" (`ghost`). Tocar fuera del aviso equivale a "Cancelar". Al guardar, la píldora "Otro" muestra el número ingresado como elegida y la celda "Si acertás" se recalcula; vacío o 0 vuelve a "Otro" con el 0 elegido.
   - Guardar cierra la tarjeta y deja el monto en el chip ("5 pulsos" en verde suave o "Sin pulsos").
   - Al guardar una tarjeta con monto, el chip de pulsos disponibles baja en el momento (de 62 a 57 al guardar 5 en "Ganar la sesión"); cambiar el monto o pasarlo a 0 lo recalcula. La reserva real ocurre al tocar "Jugar la sesión" (H10); el chip solo la anticipa.
   - Solo una tarjeta abierta a la vez. Poner 0 o no tocarla es válido.
@@ -246,7 +246,7 @@ Notas generales que aplican a todas las historias:
   - Tarjeta cerrada con título "Acertar al menos X de las 7" (no "Ganar x de las 7 sesiones" como en `Default.png`), descripción "Elegí cuántas preguntas creés que vas a acertar del tema de hoy.", chip del monto ("Sin pulsos" por defecto) y chevron.
   - Abierta, en este orden: etiqueta "ELEGÍ CUÁNTAS PREGUNTAS VAS A ACERTAR" (estilo `label`) con píldoras 4, 5, 6 y 7 (la elegida en `brand-soft` con trazo y labio `brand-deep`; por defecto, 4); etiqueta "ELEGÍ CUÁNTOS PULSOS ARRIESGÁS" con píldoras 0, 1, 5, 10 y "Otro"; celda "Si acertás" con el formato "SI ACERTÁS 6 · (×4)", "+15 pulsos" y "Cobrás 20 total"; y botón "Guardar" (`neutral`).
   - X solo puede ser 4, 5, 6 o 7 (los umbrales con multiplicador definido en la configuración); el 6 elegido en la referencia es de ejemplo.
-  - "Otro" permite un monto hasta los pulsos disponibles; la suma de las dos tarjetas nunca supera la bolsa. El ingreso es el mismo `Overlay` de H8, y el chip de pulsos disponibles baja al guardar igual que en H8.
+  - "Otro" permite un monto hasta el tope de 10 por tarjeta, sin pasar de los pulsos disponibles; la suma de las dos tarjetas nunca supera la bolsa. El ingreso es el mismo `Overlay` de H8, y el chip de pulsos disponibles baja al guardar igual que en H8.
   - Las píldoras de monto que superan lo disponible quedan deshabilitadas, igual que en H8; con monto 0 la celda "Si acertás" se oculta.
   - Solo una tarjeta abierta a la vez; poner 0 es válido.
 - **Autoridad del servidor**:
@@ -298,13 +298,13 @@ Notas generales que aplican a todas las historias:
 - **Referencias visuales**: `Referencias-y-definiciones/Pantalla-UI/Pregunta/Elegida.png`
 - **Reglas de producto involucradas**:
   - Reglas de la partida: 20 segundos visibles; el servidor acepta hasta 22; pasarse cuenta como error. 4 opciones en orden aleatorio. Ningún jugador ve una pregunta que ya respondió.
-  - Economía de Pulsos, momento 2: monto 0, 1, 5, 10 o libre hasta toda la bolsa disponible (bolsa menos lo reservado en la confianza del tema); el monto arranca en 0 en cada pregunta; acertar paga el doble de lo puesto; errar con el monto enviado con "Responder" lo pierde; si vence el tiempo sin tocar "Responder", cuenta como error con 0 pulsos.
+  - Economía de Pulsos, momento 2: monto 0, 1, 5, 10 o libre hasta un tope de 10, sin superar la bolsa disponible (bolsa menos lo reservado en la confianza del tema); el monto arranca en 0 en cada pregunta; acertar paga el doble de lo puesto; errar con el monto enviado con "Responder" lo pierde; si vence el tiempo sin tocar "Responder", cuenta como error con 0 pulsos.
   - Aura, emblemas y cards, "Confianza por pregunta": celdas "Si acertás +5 pulsos" y "Si errás -5 pulsos" (la referencia dice "Si errás o vence"; no se copia).
   - Primer flujo, paso 5.
 - **Criterios de aceptación funcionales**:
   - Encabezado: chip "Pregunta N de 7", botón cerrar, 7 segmentos de progreso (respondidas, actual y pendientes) y barra de tiempo con la cifra.
   - Etiqueta del tema, enunciado y 4 opciones con letras A a D; la elegida se marca y dice "Elegida".
-  - "Elegí cuántos pulsos arriesgás" con píldoras 0, 1, 5, 10 y "Otro" (no "Libre" como en la referencia; hasta los pulsos disponibles: la bolsa menos lo reservado en la confianza del tema). Cada pregunta arranca con 0 seleccionado.
+  - "Elegí cuántos pulsos arriesgás" con píldoras 0, 1, 5, 10 y "Otro" (no "Libre" como en la referencia; hasta el tope de 10, sin pasar de los pulsos disponibles: la bolsa menos lo reservado en la confianza del tema). Cada pregunta arranca con 0 seleccionado.
   - "Otro" abre el mismo `Overlay` de ingreso de monto que en H8 ("¿Cuántos pulsos arriesgás?", "Podés arriesgar hasta N pulsos", "Guardar" y "Cancelar"); al guardar, la píldora muestra el número como elegida y las celdas se recalculan; vacío o 0 vuelve a "Otro" con el 0 elegido.
   - Celdas siempre visibles: "Si acertás +N pulsos" y "Si errás -N pulsos", que cambian con el monto. Con monto 0, las dos dicen "0 pulsos" en `text-muted`, sin signo ni color.
   - "Responder" queda deshabilitado hasta elegir una opción; al tocarlo, envía la opción y el monto al servidor.
@@ -313,7 +313,7 @@ Notas generales que aplican a todas las historias:
 - **Autoridad del servidor**:
   - El servidor envía la pregunta y las opciones ya mezcladas, sin la respuesta correcta.
   - El cronómetro corre en el servidor desde que entrega la pregunta; la barra de la app solo lo refleja.
-  - El servidor valida el tiempo (hasta 22 s), que el monto no supere la bolsa disponible (bolsa menos lo reservado) y resuelve el resultado; la bolsa nunca queda en negativo.
+  - El servidor valida el tiempo (hasta 22 s), que el monto no supere el tope de 10 ni la bolsa disponible (bolsa menos lo reservado) y resuelve el resultado; la bolsa nunca queda en negativo.
   - Las celdas son una vista previa calculada con el módulo de reglas compartido; no mueven pulsos.
 - **Criterios de experiencia**:
   - Con 5 segundos o menos, la barra pasa a coral y la cifra a rojo; el tiempo se anuncia a lectores de pantalla en 10, 5 y 0.
@@ -656,6 +656,7 @@ Otros elementos del flujo sin referencia:
 Reglas a definir:
 
 - ¿Cómo se ve la fila de un jugador expulsado en el ranking?
+- Con el tope de 10, ¿se mantiene la píldora "Otro"? Entre 1, 5 y 10 solo agrega los montos 2–4 y 6–9 (H8, H9, H11).
 
 Decisiones tomadas (17/11/2026):
 
@@ -688,6 +689,7 @@ Decisiones tomadas (17/11/2026):
 - Monto 0: en la pregunta, las celdas "Si acertás" y "Si errás" siguen visibles con "0 pulsos" en `text-muted`; en la tarjeta de tema, la celda "Si acertás" se oculta; `ResultCard` mantiene el título ("Acertaste" / "No era esa") con "0 pulsos" en `text-muted`. Nunca "+0" ni rojo (H8, H9, H11, H12, H13).
 - Temporizador: en 0, barra vacía y "0" en `danger-text`; congelado con 5 s o menos mantiene el tono urgente; del segundo 20 al 22 no cambia nada en pantalla y "Responder" queda deshabilitado; la app nunca deja responder después de 0 (H11, H12, H13, H14, H16).
 - Las píldoras de monto que superan lo disponible quedan deshabilitadas (`surface-2`, sin labio, "No disponible"); "Otro" cubre cualquier monto hasta el máximo (H8, H9, H11).
+- Topes de monto (21/11/2026): 10 pulsos por pregunta y 10 por tarjeta de tema, configurables; el máximo de "Otro" es el menor entre el tope y los pulsos disponibles. Se adoptaron porque la simulación de la economía mostró inflación exponencial sin topes (H8, H9, H11).
 - Ventana que vence con la pantalla abierta: Inicio y detalle se actualizan solos con chip "Cerrada" (`forest`) y `neutral` "Ver ranking"; en el tema, "Jugar la sesión" se rechaza con "Esta sesión ya cerró. No se movieron pulsos." y "Volver a la partida"; en medio de las preguntas, "La sesión cerró. Las preguntas que faltaban cuentan como error, sin pulsos." y "Volver a la partida" (H2, H4, H6, H10, H11, H16).
 - Botón de ícono cuadrado `neutral` para la navegación: cerrar (pregunta) y volver (detalle de partida) (H4, H11, H16). La ayuda "?" es informativa y va en `ghost`.
 - Botón de ayuda "?" `ghost` ("Cómo funciona la confianza") que abre el `Overlay` "¿Cómo funciona la confianza?" con tres líneas y `neutral` "Entendido". El `Overlay` se usa para decisiones del jugador y ayuda, nunca para errores (H8, H9, H10).

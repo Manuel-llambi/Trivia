@@ -57,7 +57,7 @@ Esta feature cubre el primer flujo a desarrollar: el jugador entra a una partida
 17. Como jugador, quiero desplegar la tarjeta **Ganar la sesión** ("Acertá más que el resto hoy. Paga ×5,4 con 6 jugadores.", con el multiplicador y la cantidad de jugadores dinámicos), para saber cuánto cobro antes de confirmar.
 18. Como jugador, quiero que el multiplicador quede fijo a la hora de apertura del día, sea el mismo para todos y sea el que se paga, para que lo que cobro no dependa de lo que arriesgan los demás.
 19. Como jugador, quiero desplegar la tarjeta **Acertar al menos X de las 7** ("Elegí cuántas preguntas creés que vas a acertar del tema de hoy.") y elegir X con las píldoras 4, 5, 6 y 7 bajo "ELEGÍ CUÁNTAS PREGUNTAS VAS A ACERTAR" (4 por defecto), para respaldar cuántas creo que voy a acertar (`Topic Reel/Al menos X expanded.png`, salvo que la imagen muestra del 1 al 7).
-20. Como jugador, quiero elegir el monto de cada tarjeta entre 0, 1, 5, 10 u "Otro", sin que la suma de las dos supere mi bolsa, para ajustar el riesgo. "Otro" (igual en la pregunta) abre un aviso sobre la pantalla oscurecida con "¿Cuántos pulsos arriesgás?", un campo numérico con foco automático y teclado numérico, "Podés arriesgar hasta N pulsos", **Guardar** y **Cancelar** (tocar fuera = Cancelar); un valor mayor al máximo se ajusta solo, sin rojo ni reproche; al guardar, la píldora muestra el número como elegida y la celda "Si acertás" se recalcula; vacío o 0 vuelve a "Otro" con el 0 elegido.
+20. Como jugador, quiero elegir el monto de cada tarjeta entre 0, 1, 5, 10 u "Otro", con un tope de 10 pulsos por tarjeta y sin que la suma de las dos supere mi bolsa, para ajustar el riesgo. "Otro" (igual en la pregunta) abre un aviso sobre la pantalla oscurecida con "¿Cuántos pulsos arriesgás?", un campo numérico con foco automático y teclado numérico, "Podés arriesgar hasta N pulsos", **Guardar** y **Cancelar** (tocar fuera = Cancelar); un valor mayor al máximo se ajusta solo, sin rojo ni reproche; al guardar, la píldora muestra el número como elegida y la celda "Si acertás" se recalcula; vacío o 0 vuelve a "Otro" con el 0 elegido.
 21. Como jugador, quiero ver la ganancia y el total exactos ("Si acertás +22 pulsos · Cobrás 27 total"; en "al menos X", "SI ACERTÁS 6 · (×4)", "+15 pulsos", "Cobrás 20 total"), redondeados hacia abajo, para decidir con información.
 22. Como jugador, quiero tocar **Guardar** y que la tarjeta se cierre mostrando el monto en su chip ("Sin pulsos" por defecto), con una sola tarjeta abierta a la vez.
 23. Como jugador, quiero que el chip de pulsos disponibles baje apenas guardo una tarjeta con monto (de 62 a 57 al guardar 5 en "Ganar la sesión") y se recalcule si cambio el monto o lo paso a 0, para ver lo que me queda sin una línea aparte con el total; la reserva real ocurre al tocar **Jugar la sesión**.
@@ -69,7 +69,7 @@ Esta feature cubre el primer flujo a desarrollar: el jugador entra a una partida
 26. Como jugador, quiero ver el chip "Pregunta 3 de 7", el botón cerrar, 7 segmentos de progreso y la barra de tiempo con la cifra, para saber dónde estoy y cuánto me queda.
 27. Como jugador, quiero tener 20 segundos por pregunta, contados por el servidor desde que me entrega la pregunta, con la barra en coral cuando quedan 5 o menos.
 28. Como jugador, quiero ver el tema en una etiqueta, el enunciado y 4 opciones (A–D) en orden aleatorio, y que la elegida diga "Elegida".
-29. Como jugador, quiero elegir cuántos pulsos arriesgo ("Elegí cuántos pulsos arriesgás": 0, 1, 5, 10 u "Otro" hasta mis pulsos disponibles, es decir, la bolsa menos lo reservado en el tema), con el monto en 0 al empezar cada pregunta.
+29. Como jugador, quiero elegir cuántos pulsos arriesgo ("Elegí cuántos pulsos arriesgás": 0, 1, 5, 10 u "Otro" hasta un tope de 10, sin pasar de mis pulsos disponibles, es decir, la bolsa menos lo reservado en el tema), con el monto en 0 al empezar cada pregunta.
 30. Como jugador, quiero ver antes de responder "Si acertás +5 pulsos" y "Si errás -5 pulsos" con signo y color (con monto 0, las dos dicen "0 pulsos" en `text-muted`), para conocer la consecuencia.
 31. Como jugador, quiero que **Responder** esté deshabilitado hasta elegir una opción y que, al tocarlo, envíe la opción y el monto.
 32. Como jugador, quiero recibir el doble de lo puesto si acierto, o perderlo si erro con un monto enviado a tiempo.
@@ -151,6 +151,7 @@ Del documento del MVP:
 - Premio mayor: 150, solo si la partida llega al final del día 5.
 - Emblemas en 5, 10, 20, 50 y 100 Aura.
 - Montos de confianza: 0, 1, 5, 10 y "Otro" (monto libre).
+- Tope por pregunta: 10 Pulsos. Tope por tarjeta de tema: 10 Pulsos. Adoptados el 21 de noviembre de 2026 porque, sin tope, la simulación mostró inflación exponencial (unos 9.500 Pulsos creados por partida contra unos 1.100 con topes).
 
 **Interacciones y tono**
 
@@ -160,7 +161,7 @@ Del documento del MVP:
 - Sin confeti, destellos, fichas, luces ni sonidos de tragamonedas. Sin rojo en el cero. Textos sin culpa.
 - Ganancias y pérdidas siempre con signo y color (+12 en `brand-text`, -8 en `danger-text`); ningún resultado depende solo del color. Netos: "+12 pulsos ganados", "-8 pulsos perdidos", "sin cambios" (también en "Tu puesto"); singular con 1 ("1 pulso"). El cero es "0 pulsos" en `text-muted`, nunca "+0": con monto 0, las celdas de la pregunta dicen "0 pulsos", la celda "Si acertás" de la tarjeta de tema se oculta y `ResultCard` mantiene su título.
 - Temporizador: en 0, barra vacía y "0" en `danger-text`; congelado con 5 s o menos mantiene el tono urgente.
-- Píldoras de monto que superan lo disponible: deshabilitadas; "Otro" cubre cualquier monto hasta el máximo.
+- Píldoras de monto que superan lo disponible: deshabilitadas; "Otro" cubre cualquier monto hasta el máximo (el menor entre el tope de 10 y lo disponible). Con el tope, "Otro" solo agrega los montos 2–4 y 6–9: queda abierto si se mantiene.
 - Solo cuatro variantes de botón; "Guardar" es `neutral` en las tarjetas de tema (confirmado) y `brand` en el `Overlay`. Cerrar (pregunta) y volver (detalle) usan el mismo botón de ícono cuadrado `neutral`; la ayuda "?" es un botón de ícono `ghost`. En el Inicio, cada card jugable lleva su propio `brand` "Jugar" (excepción explícita a "un color fuerte por pantalla").
 - `Overlay` (componente nuevo del DS, detalle visual provisorio): tarjeta `surface` con `radius-lg` y `shadow-float` sobre un velo que oscurece la pantalla. Se usa para decisiones del jugador y ayuda, nunca para errores: el monto "Otro" ("Guardar" `brand`, "Cancelar" `ghost`), la salida de la sesión ("Salir" `coral`, "Seguir jugando" `neutral`) y la ayuda "¿Cómo funciona la confianza?" ("Entendido" `neutral`).
 - Carga y error (patrón del DS): esqueletos `surface-2` sin spinner; botón que espera al servidor deshabilitado (`surface-2`, sin labio) con el mismo rótulo; error en un bloque `surface-2` con "No pudimos conectarnos. Revisá tu conexión y probá de nuevo." y `neutral` "Reintentar", sin rojo. "Responder" y "Jugar la sesión" reintentan solos 2 veces.
@@ -192,6 +193,7 @@ Del documento del MVP:
 8. Pestañas "Te toca" y "Jugadas" seleccionadas, y estados vacíos del inicio.
 9. Activación e indicación del modo rápido.
 10. ¿Cómo se ve la fila de un jugador expulsado en el ranking?
+11. Con el tope de 10, ¿se mantiene la píldora "Otro"? Entre 1, 5 y 10 solo agrega los montos 2–4 y 6–9.
 
 ## Fuera de alcance
 
