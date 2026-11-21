@@ -9,7 +9,10 @@ export const MVP_CONFIG: RulesConfig = {
   questionsPerSession: 7,
   visibleAnswerMs: 20_000,
   acceptedAnswerMs: 22_000,
-  questionStakeCap: null,
+  // Adopted 2026-11-21 after the simulation: uncapped stakes compound and
+  // inflate the economy ~9x. Both caps are provisional.
+  questionStakeCap: 10,
+  topicStakeCap: 10,
   entryCost: 50,
   pulsosPerAura: 25,
   atLeastTiers: [

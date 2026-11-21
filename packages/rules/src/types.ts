@@ -44,11 +44,13 @@ export interface RulesConfig {
   /** Server acceptance limit, absorbs latency. MVP: 22 000 ms. */
   readonly acceptedAnswerMs: number;
   /**
-   * Max stake per question, on top of the available Pulsos. Null = no cap
-   * (MVP as written). Under evaluation: without a cap, stakes compound and
-   * the economy inflates exponentially (see sim/).
+   * Max stake per question, on top of the available Pulsos. Null = no cap.
+   * MVP: 10. Without a cap, stakes compound and the economy inflates
+   * exponentially (see sim/).
    */
   readonly questionStakeCap: Pulsos | null;
+  /** Max stake per topic card ("win the session", "at least X"). Null = no cap. MVP: 10. */
+  readonly topicStakeCap: Pulsos | null;
   /** Pulsos moved from the general counter into the bag. MVP: 50. */
   readonly entryCost: Pulsos;
   /** MVP: 25. */

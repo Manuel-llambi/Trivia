@@ -56,14 +56,15 @@ export function chooseTopicStakes(
   config: RulesConfig,
 ): TopicStakes {
   const available = availablePulsos(bag);
+  const cap = config.topicStakeCap ?? Number.POSITIVE_INFINITY;
   const wantsWinSession =
     profile.winSession === 'always' || (profile.winSession === 'confident' && topicAccuracy >= 0.75);
-  const winSession = wantsWinSession ? amountFor(profile.topicStake, available) : 0;
+  const winSession = wantsWinSession ? Math.min(cap, amountFor(profile.topicStake, available)) : 0;
 
   const threshold = chooseThreshold(profile, topicAccuracy, config);
   let atLeast: AtLeastStake | null = null;
   if (threshold !== null) {
-    const stake = amountFor(profile.topicStake, available - winSession);
+    const stake = Math.min(cap, amountFor(profile.topicStake, available - winSession));
     // Skip stakes that can never gain after rounding down (e.g. 1-3 Pulsos at ×1.3).
     const gains = atLeastPayout(stake, threshold, config) > stake;
     atLeast = stake > 0 && (gains || profile.atLeast === 'fixed4') ? { threshold, stake } : null;

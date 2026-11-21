@@ -24,13 +24,21 @@ function atLeastMultiplier(threshold: number, config: RulesConfig): Hundredths {
   return tier.multiplier;
 }
 
+/** Upper bound for one topic card on its own (the sum is also bounded by the bag). */
+export function maxTopicStake(bag: Bag, config: RulesConfig): Pulsos {
+  const available = availablePulsos(bag);
+  return config.topicStakeCap === null ? available : Math.min(available, config.topicStakeCap);
+}
+
 /**
- * Both stakes are optional, must be whole amounts, the threshold must be
- * configured, and their sum must fit in the available Pulsos.
+ * Both stakes are optional, must be whole amounts within the per-card cap,
+ * the threshold must be configured, and their sum must fit in the available Pulsos.
  */
 export function isValidTopicStakes(stakes: TopicStakes, bag: Bag, config: RulesConfig): boolean {
   const atLeastStake = stakes.atLeast?.stake ?? 0;
   if (!isWholeAmount(stakes.winSession) || !isWholeAmount(atLeastStake)) return false;
+  const cap = maxTopicStake(bag, config);
+  if (stakes.winSession > cap || atLeastStake > cap) return false;
   if (stakes.atLeast && !config.atLeastTiers.some((t) => t.threshold === stakes.atLeast?.threshold)) {
     return false;
   }

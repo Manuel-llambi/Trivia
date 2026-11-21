@@ -11,9 +11,9 @@ const matches = Number(process.argv[2] ?? 10_000);
 const seed = Number(process.argv[3] ?? 42);
 
 const VARIANTS: readonly { name: string; config: RulesConfig }[] = [
-  { name: 'MVP (no cap)', config: MVP_CONFIG },
-  { name: 'cap 20', config: { ...MVP_CONFIG, questionStakeCap: 20 } },
-  { name: 'cap 10', config: { ...MVP_CONFIG, questionStakeCap: 10 } },
+  { name: 'MVP (q10 t10)', config: MVP_CONFIG },
+  { name: 'no caps', config: { ...MVP_CONFIG, questionStakeCap: null, topicStakeCap: null } },
+  { name: 'q20 t20', config: { ...MVP_CONFIG, questionStakeCap: 20, topicStakeCap: 20 } },
 ];
 
 for (const scenario of [NORMAL, EASY]) {
