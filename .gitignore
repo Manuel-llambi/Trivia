@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Expo / Metro
+.expo/
+dist/
+web-build/
+.metro-health-check*
+expo-env.d.ts
+
+# Generated native folders
+mobile/ios/
+mobile/android/
+
+# Supabase local state
+supabase/.temp/
+supabase/.branches/
+
+# Environment files (keep the committed example)
+.env
+.env*
+!.env.example
+
+# Logs and OS files
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
