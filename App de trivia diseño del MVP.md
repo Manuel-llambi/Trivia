@@ -149,9 +149,9 @@ El recorrido va de la lista de partidas a la sesión del día y termina en el ra
 
 1. **Inicio (dashboard):** tres pestañas, *Te toca*, *Jugadas* y *Todas*. Cada card muestra el día (1 de 5), el estado de la sesión (disponible, jugada o cuánto falta para que venza), la bolsa, la ganancia neta y mi posición. Arriba a la derecha, el Aura con su aro y el emblema.
 2. **Detalle de la partida:** mi puesto y los pulsos ganados, pestañas *Ranking* e *Historial*, y el ranking por Pulsos. Si me toca jugar, aparece el botón **Jugar la sesión**.
-3. **Revelación del tema:** el jugador toca "Descubrir tema" y una animación tipo rueda revela el tema que el servidor ya definió. Se muestra el promedio global de aciertos en ese tema.
+3. **Revelación del tema:** el jugador toca "Descubrir tema" y una animación tipo rueda revela el tema que el servidor ya definió.
 4. **Apuestas de tema (momento 1):** en la misma pantalla, debajo del tema: "ganar la sesión" (con su multiplicador a la vista) y "al menos X de las 7", cada una con su monto y su pago exacto. El chip de pulsos disponibles baja al guardar cada monto, así que muestra lo que me queda sin una línea aparte con el total. Al empezar la sesión no se puede cambiar y lo arriesgado queda reservado de la bolsa.
-5. **Pregunta (×7, momento 2):** pregunta, 4 opciones, cronómetro y progreso. Elijo respuesta y cuántos Pulsos pongo (arranca en 0 en cada pregunta; no puedo confirmar sin elegir respuesta); siempre se ve cuánto tengo en juego. Al confirmar aparece acierto o error, la explicación, el movimiento de Pulsos y un botón para reportar un error en la pregunta. El tiempo empieza a correr al empezar las preguntas.
+5. **Pregunta (×7, momento 2):** pregunta, 4 opciones, cronómetro y progreso. Elijo respuesta y cuántos Pulsos pongo (arranca en 0 en cada pregunta; no puedo confirmar sin elegir respuesta); siempre se ve cuánto tengo en juego. Al confirmar aparece acierto o error, la explicación y el movimiento de Pulsos. El tiempo empieza a correr al empezar las preguntas.
 6. **Resumen del día:** aciertos (por ejemplo 5 de 7), resultado de las apuestas de tema, Pulsos netos del día, posición y, si ya se resolvió, el resultado de "ganar la sesión". Después de la sesión del día 5, el resumen avisa que los resultados finales salen cuando todos terminen.
 7. **Ranking de la partida:** Pulsos netos actualizados cuando cada jugador termina su sesión.
 8. **Fin de partida (cuando la partida se resuelve: el último jugador en pie termina el día 5, cierra la ventana del día 5 o queda uno solo):** ganador, premio (si corresponde), logros y la animación del contador general. El jugador llega por una notificación push o la próxima vez que abre la app.
@@ -185,7 +185,7 @@ Es el recorrido desde que el jugador entra a una partida en la que le toca jugar
    - En los dos, botón **Siguiente pregunta**.
 7. **Fin de partida** (`Fin de partida/Gana.png`). Aparece cuando la partida se resuelve, no al terminar la propia sesión del día 5 (ver "Aura, emblemas y cards"). Chip "Partida terminada", título de la partida, "Quedaste 2º de 4 jugadores", aro grande del contador general con el Aura, marca del punto de partida, "22 de 25 pulsos para tu 2ª aura", bloque "Ganaste +6" y botón **Continuar**.
 
-**Faltan en las referencias** (definir antes de cerrar el flujo): el resumen del día después de la 7ª pregunta, el promedio global del tema, el botón para reportar una pregunta, el contenido de la pestaña *Historial*, el emblema en el encabezado y el premio y los logros en el fin de partida.
+**Faltan en las referencias** (definir antes de cerrar el flujo): el resumen del día después de la 7ª pregunta, el contenido de la pestaña *Historial*, el emblema en el encabezado y el premio y los logros en el fin de partida.
 
 ## Arquitectura
 
@@ -195,7 +195,7 @@ La app no calcula nada que afecte Pulsos: envía respuestas y apuestas, y el ser
 
 - **Stack:** Expo (React Native) con TypeScript; Supabase para base de datos Postgres, autenticación, funciones del servidor y tareas programadas; notificaciones push de Expo. Para probar se distribuye con Expo Go o TestFlight.
 - **Acceso:** email con código de 6 dígitos (OTP de Supabase), sin link mágico, más un apodo visible.
-- **Datos principales:** usuarios, partidas, jugadores de la partida, días con su tema, banco de preguntas (tema, texto, opciones, respuesta correcta, explicación, fuente), preguntas vistas por usuario, sesiones, apuestas, reportes de preguntas y libro de movimientos de Pulsos.
+- **Datos principales:** usuarios, partidas, jugadores de la partida, días con su tema, banco de preguntas (tema, texto, opciones, respuesta correcta, explicación, fuente), preguntas vistas por usuario, sesiones, apuestas y libro de movimientos de Pulsos.
 - **Reglas configurables:** duración, cantidad de preguntas, Pulsos iniciales, costo de entrada, multiplicadores de "al menos X", factor de "ganar la sesión" (0,9), premio mayor, cortes de emblemas, tiempo por pregunta, espera de quiebra, ritmo de las sesiones y umbral de alerta del banco de preguntas viven en configuración, no en el código.
 - **Motor de reglas:** pagos y ranking como funciones puras con pruebas automáticas, en un módulo compartido entre el servidor (pagos reales) y la app (vistas previas).
 - **Pensado para crecer:** el competidor de una partida se modela como "participante", para que a futuro pueda ser un usuario o un equipo sin rehacer la base.
@@ -206,8 +206,7 @@ La app no calcula nada que afecte Pulsos: envía respuestas y apuestas, y el ser
 2. Llama a la API de Claude y genera un JSON con pregunta, 4 opciones, respuesta correcta, explicación y fuente.
 3. Revisión humana del 100% en un archivo, marcando las aprobadas.
 4. Un segundo comando carga en Supabase solo las aprobadas.
-5. Desde la app, los jugadores reportan errores; los reportes se revisan y corrigen.
-6. Cuando un tema baja de un umbral de preguntas disponibles (configurable), el administrador recibe una alerta.
+5. Cuando un tema baja de un umbral de preguntas disponibles (configurable), el administrador recibe una alerta.
 
 ## Casos borde y manejo de fallas
 
@@ -262,7 +261,7 @@ La app no calcula nada que afecte Pulsos: envía respuestas y apuestas, y el ser
 
 - **Presión compulsiva:** la mecánica de riesgo es deliberadamente la de un casino. Mitigación: sin estética de casino, sin dinero real, una sola partida al inicio, reflexión tras la expulsión y logros no monetarios.
 - **Mensaje sobre apuestas:** no prometer que la app "cura" adicciones. Las apuestas simuladas pueden normalizar el hábito en menores; la moneda no se compra ni se canjea.
-- **Calidad de las preguntas:** es el producto. Revisión humana del 100% y reporte de errores.
+- **Calidad de las preguntas:** es el producto. Revisión humana del 100%.
 - **Banco de preguntas:** sin repeticiones entre partidas, el banco se consume rápido. Meta inicial: 8 temas con unas 60 preguntas cada uno.
 - **Abandono de quien queda atrás:** con premio solo para el 1° y emblemas que bajan, se necesitan logros y resultados parciales que sostengan el interés.
 - **Inflación:** los premios y los multiplicadores de "al menos X" crean Pulsos. "Ganar la sesión" retira en promedio un 10% (factor 0,9), pero un jugador que gana seguido crea Pulsos igual. Ya no hay comisión de pozo: si la simulación muestra inflación, hay que bajar factores o sumar otro mecanismo que retire Pulsos. A futuro se necesitan lugares donde gastarlos.

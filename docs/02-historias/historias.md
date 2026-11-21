@@ -192,27 +192,6 @@ Notas generales que aplican a todas las historias:
 
 ---
 
-## H7: Ver el promedio global de aciertos del tema
-
-- **Descripción**: Como jugador, quiero ver el promedio global de aciertos del tema revelado, para calibrar cuánta confianza pongo.
-- **Referencias visuales**: sin referencia (promedio global del tema).
-- **Reglas de producto involucradas**:
-  - Flujo y pantallas, paso 3: se muestra el promedio global de aciertos en ese tema.
-  - Primer flujo: "Faltan en las referencias: el promedio global del tema".
-- **Criterios de aceptación funcionales**:
-  - Con el tema revelado, la pantalla muestra el promedio global de aciertos de ese tema.
-  - Ubicación, formato y texto pendientes de referencia.
-- **Autoridad del servidor**:
-  - El servidor calcula y entrega el promedio global.
-- **Criterios de experiencia**:
-  - Pendiente de referencia. Cifras tabulares.
-- **Casos borde**:
-  - Tema sin historial de respuestas: qué se muestra no está definido (ver "Preguntas para PO").
-- **Dependencias**: depende de H6
-- **Prioridad**: media — ayuda a decidir, pero no bloquea jugar.
-
----
-
 ## H8: Poner confianza en "Ganar la sesión"
 
 - **Descripción**: Como jugador, quiero elegir cuántos pulsos arriesgo a ganar la sesión del día viendo exactamente cuánto cobraría, para respaldar que voy a hacer el mejor puntaje del día.
@@ -437,29 +416,6 @@ Notas generales que aplican a todas las historias:
 
 ---
 
-## H15: Reportar un error en una pregunta
-
-- **Descripción**: Como jugador, quiero reportar un error en una pregunta después de responderla, para que se revise y corrija.
-- **Referencias visuales**: sin referencia (botón para reportar una pregunta).
-- **Reglas de producto involucradas**:
-  - Flujo y pantallas, paso 5: al confirmar aparece un botón para reportar un error en la pregunta.
-  - Arquitectura: los jugadores reportan errores desde la app; los reportes se revisan y corrigen.
-- **Criterios de aceptación funcionales**:
-  - En el estado respondido (acierto, error o tiempo vencido) hay un botón para reportar la pregunta.
-  - El reporte se guarda asociado a la pregunta y al jugador.
-  - Ubicación, texto y si se pide un motivo: pendiente de referencia.
-- **Autoridad del servidor**:
-  - El servidor guarda el reporte; reportar no cambia el resultado ni los pulsos.
-- **Criterios de experiencia**:
-  - Confirmación breve de que se envió; error con reintento.
-  - No compite con "Siguiente pregunta" como acción principal.
-- **Casos borde**:
-  - Reporte duplicado de la misma pregunta por el mismo jugador: comportamiento sin definir.
-- **Dependencias**: depende de H12
-- **Prioridad**: media — importante para la calidad de preguntas, no bloquea jugar.
-
----
-
 ## H16: Salir o perder la conexión a mitad de la sesión
 
 - **Descripción**: Como jugador, quiero saber qué pasa si cierro la sesión o se corta la conexión a mitad de las preguntas, para no perder lo que ya respondí.
@@ -674,19 +630,17 @@ Notas generales que aplican a todas las historias:
 ---
 
 ## Resumen
-- Total de historias: 23
+- Total de historias: 21
 - Prioridad alta: H2, H4, H6, H8, H9, H10, H11, H12, H13, H14, H17, H19
-- Prioridad media: H1, H3, H7, H15, H16, H18, H21, H22, H23
+- Prioridad media: H1, H3, H16, H18, H21, H22, H23
 - Prioridad baja: H5, H20
-- Historias sin referencia visual (total o del elemento central): H5, H7, H13 y H14 (definidos en texto), H15, H16 (`Overlay`, definido en texto), H17, H18 (hoja), H20, H22, H23. Con elementos parciales sin referencia: H1 (emblema) y H3 (pestañas Te toca y Jugadas).
+- Historias sin referencia visual (total o del elemento central): H5, H13 y H14 (definidos en texto), H16 (`Overlay`, definido en texto), H17, H18 (hoja), H20, H22, H23. Con elementos parciales sin referencia: H1 (emblema) y H3 (pestañas Te toca y Jugadas).
 
 ## Preguntas para PO
 
 Elementos que el MVP lista en "Faltan en las referencias" (sin referencia):
 
 - Resumen del día después de la 7ª pregunta (H17): diseño, textos y a dónde lleva.
-- Promedio global del tema (H7): ubicación, formato y qué mostrar si el tema no tiene historial.
-- Botón para reportar una pregunta (H15): ubicación, texto y si pide motivo.
 - Contenido de la pestaña *Historial* (H5).
 - Emblema en el encabezado (H1) y diseño visual de cada emblema.
 - Premio y logros en el fin de partida (H20).

@@ -50,67 +50,65 @@ Esta feature cubre el primer flujo a desarrollar: el jugador entra a una partida
 13. Como jugador, quiero ver "Descubrí el tema de hoy", "Un solo tema al azar para todos los jugadores de la partida." y la ventana con "Tema de hoy", para confiar en que la competencia es pareja.
 14. Como jugador, quiero tocar **Descubrir tema** y ver el carrete girar y frenar en el tema, sin vibración, para que la revelación tenga intriga sin parecer un juego de azar.
 15. Como jugador, quiero que el tema revelado sea el que el servidor ya definió, y que al volver a la pantalla se vea sin volver a girar, para que nadie pueda girar hasta que le toque uno que le convenga.
-16. Como jugador, quiero ver el promedio global de aciertos del tema, para calibrar cuánto arriesgar.
 
 **Poner confianza en el tema (momento 1)**
 
-17. Como jugador, quiero ver "¿Confiás en tu conocimiento?" con un botón de ayuda "?" que abre "¿Cómo funciona la confianza?" (tres líneas sobre "Ganar la sesión", "Acertar al menos X de las 7" y la reserva al tocar **Jugar la sesión**, con **Entendido**), la bajada "Arriesgá pulsos para ganar más, todo depende de qué tanto confiás en tu conocimiento", el chip "N pulsos disponibles" y "¿Cómo querés arriesgar?", para saber con cuánto cuento.
-18. Como jugador, quiero desplegar la tarjeta **Ganar la sesión** ("Acertá más que el resto hoy. Paga ×5,4 con 6 jugadores.", con el multiplicador y la cantidad de jugadores dinámicos), para saber cuánto cobro antes de confirmar.
-19. Como jugador, quiero que el multiplicador quede fijo a la hora de apertura del día, sea el mismo para todos y sea el que se paga, para que lo que cobro no dependa de lo que arriesgan los demás.
-20. Como jugador, quiero desplegar la tarjeta **Acertar al menos X de las 7** ("Elegí cuántas preguntas creés que vas a acertar del tema de hoy.") y elegir X con las píldoras 4, 5, 6 y 7 bajo "ELEGÍ CUÁNTAS PREGUNTAS VAS A ACERTAR" (4 por defecto), para respaldar cuántas creo que voy a acertar (`Topic Reel/Al menos X expanded.png`, salvo que la imagen muestra del 1 al 7).
-21. Como jugador, quiero elegir el monto de cada tarjeta entre 0, 1, 5, 10 u "Otro", sin que la suma de las dos supere mi bolsa, para ajustar el riesgo. "Otro" (igual en la pregunta) abre un aviso sobre la pantalla oscurecida con "¿Cuántos pulsos arriesgás?", un campo numérico con foco automático y teclado numérico, "Podés arriesgar hasta N pulsos", **Guardar** y **Cancelar** (tocar fuera = Cancelar); un valor mayor al máximo se ajusta solo, sin rojo ni reproche; al guardar, la píldora muestra el número como elegida y la celda "Si acertás" se recalcula; vacío o 0 vuelve a "Otro" con el 0 elegido.
-22. Como jugador, quiero ver la ganancia y el total exactos ("Si acertás +22 pulsos · Cobrás 27 total"; en "al menos X", "SI ACERTÁS 6 · (×4)", "+15 pulsos", "Cobrás 20 total"), redondeados hacia abajo, para decidir con información.
-23. Como jugador, quiero tocar **Guardar** y que la tarjeta se cierre mostrando el monto en su chip ("Sin pulsos" por defecto), con una sola tarjeta abierta a la vez.
-24. Como jugador, quiero que el chip de pulsos disponibles baje apenas guardo una tarjeta con monto (de 62 a 57 al guardar 5 en "Ganar la sesión") y se recalcule si cambio el monto o lo paso a 0, para ver lo que me queda sin una línea aparte con el total; la reserva real ocurre al tocar **Jugar la sesión**.
-25. Como jugador, quiero que poner confianza sea opcional, para poder jugar solo por los aciertos.
-26. Como jugador, quiero que **Jugar la sesión** confirme y reserve de mi bolsa lo arriesgado en el tema y arranque las preguntas, sin poder cambiarlo después, para que las reglas sean claras.
+16. Como jugador, quiero ver "¿Confiás en tu conocimiento?" con un botón de ayuda "?" que abre "¿Cómo funciona la confianza?" (tres líneas sobre "Ganar la sesión", "Acertar al menos X de las 7" y la reserva al tocar **Jugar la sesión**, con **Entendido**), la bajada "Arriesgá pulsos para ganar más, todo depende de qué tanto confiás en tu conocimiento", el chip "N pulsos disponibles" y "¿Cómo querés arriesgar?", para saber con cuánto cuento.
+17. Como jugador, quiero desplegar la tarjeta **Ganar la sesión** ("Acertá más que el resto hoy. Paga ×5,4 con 6 jugadores.", con el multiplicador y la cantidad de jugadores dinámicos), para saber cuánto cobro antes de confirmar.
+18. Como jugador, quiero que el multiplicador quede fijo a la hora de apertura del día, sea el mismo para todos y sea el que se paga, para que lo que cobro no dependa de lo que arriesgan los demás.
+19. Como jugador, quiero desplegar la tarjeta **Acertar al menos X de las 7** ("Elegí cuántas preguntas creés que vas a acertar del tema de hoy.") y elegir X con las píldoras 4, 5, 6 y 7 bajo "ELEGÍ CUÁNTAS PREGUNTAS VAS A ACERTAR" (4 por defecto), para respaldar cuántas creo que voy a acertar (`Topic Reel/Al menos X expanded.png`, salvo que la imagen muestra del 1 al 7).
+20. Como jugador, quiero elegir el monto de cada tarjeta entre 0, 1, 5, 10 u "Otro", sin que la suma de las dos supere mi bolsa, para ajustar el riesgo. "Otro" (igual en la pregunta) abre un aviso sobre la pantalla oscurecida con "¿Cuántos pulsos arriesgás?", un campo numérico con foco automático y teclado numérico, "Podés arriesgar hasta N pulsos", **Guardar** y **Cancelar** (tocar fuera = Cancelar); un valor mayor al máximo se ajusta solo, sin rojo ni reproche; al guardar, la píldora muestra el número como elegida y la celda "Si acertás" se recalcula; vacío o 0 vuelve a "Otro" con el 0 elegido.
+21. Como jugador, quiero ver la ganancia y el total exactos ("Si acertás +22 pulsos · Cobrás 27 total"; en "al menos X", "SI ACERTÁS 6 · (×4)", "+15 pulsos", "Cobrás 20 total"), redondeados hacia abajo, para decidir con información.
+22. Como jugador, quiero tocar **Guardar** y que la tarjeta se cierre mostrando el monto en su chip ("Sin pulsos" por defecto), con una sola tarjeta abierta a la vez.
+23. Como jugador, quiero que el chip de pulsos disponibles baje apenas guardo una tarjeta con monto (de 62 a 57 al guardar 5 en "Ganar la sesión") y se recalcule si cambio el monto o lo paso a 0, para ver lo que me queda sin una línea aparte con el total; la reserva real ocurre al tocar **Jugar la sesión**.
+24. Como jugador, quiero que poner confianza sea opcional, para poder jugar solo por los aciertos.
+25. Como jugador, quiero que **Jugar la sesión** confirme y reserve de mi bolsa lo arriesgado en el tema y arranque las preguntas, sin poder cambiarlo después, para que las reglas sean claras.
 
 **Jugar las 7 preguntas (momento 2)**
 
-27. Como jugador, quiero ver el chip "Pregunta 3 de 7", el botón cerrar, 7 segmentos de progreso y la barra de tiempo con la cifra, para saber dónde estoy y cuánto me queda.
-28. Como jugador, quiero tener 20 segundos por pregunta, contados por el servidor desde que me entrega la pregunta, con la barra en coral cuando quedan 5 o menos.
-29. Como jugador, quiero ver el tema en una etiqueta, el enunciado y 4 opciones (A–D) en orden aleatorio, y que la elegida diga "Elegida".
-30. Como jugador, quiero elegir cuántos pulsos arriesgo ("Elegí cuántos pulsos arriesgás": 0, 1, 5, 10 u "Otro" hasta mis pulsos disponibles, es decir, la bolsa menos lo reservado en el tema), con el monto en 0 al empezar cada pregunta.
-31. Como jugador, quiero ver antes de responder "Si acertás +5 pulsos" y "Si errás -5 pulsos" con signo y color (con monto 0, las dos dicen "0 pulsos" en `text-muted`), para conocer la consecuencia.
-32. Como jugador, quiero que **Responder** esté deshabilitado hasta elegir una opción y que, al tocarlo, envíe la opción y el monto.
-33. Como jugador, quiero recibir el doble de lo puesto si acierto, o perderlo si erro con un monto enviado a tiempo.
-34. Como jugador al que se le venció el tiempo sin tocar **Responder**, quiero que cuente como error con 0 pulsos, porque el monto elegido nunca llegó al servidor.
-35. Como jugador con mala conexión, quiero que una respuesta que llega al servidor después de los 22 segundos cuente como error con 0 pulsos, para que la conexión no me cueste pulsos.
-36. Como jugador que respondió, quiero que el tiempo se congele, las otras opciones se atenúen y la correcta diga "Correcta", para ver el resultado sin ambigüedad.
-37. Como jugador que acertó, quiero una tarjeta con "Acertaste", "+5 pulsos" y la explicación, para aprender algo en cada pregunta.
-38. Como jugador que erró, quiero ver mi opción marcada como "Incorrecta" (coral suave con cruz), la correcta con "Correcta", las otras dos atenuadas, el tiempo congelado en el segundo en que respondí y una tarjeta "No era esa" con "-5 pulsos" en `danger-text` (o "0 pulsos" en `text-muted` si no arriesgué) y la explicación; y si se me venció el tiempo, la correcta con "Correcta", las otras tres atenuadas sin ninguna elegida, el temporizador en 0 (barra vacía y la cifra "0" en `danger-text`) y una tarjeta "Se terminó el tiempo" con "0 pulsos" en `text-muted`, "Cuenta como error, no perdiste pulsos." y la explicación, para entender qué pasó sin sentir culpa. Los dos estados están definidos en texto, sin imagen de referencia.
-39. Como jugador, quiero un botón para reportar un error en la pregunta, para ayudar a mejorar el banco.
-40. Como jugador, quiero el botón **Siguiente pregunta**, para avanzar a mi ritmo entre preguntas.
-41. Como jugador, quiero no ver nunca una pregunta que ya respondí en cualquier partida, para que el juego mida lo que sé y no lo que memoricé.
-42. Como jugador con 0 pulsos disponibles y pulsos reservados en el tema, quiero seguir la sesión con monto 0 y que mis aciertos cuenten para las dos tarjetas del tema, porque no estoy expulsado.
-43. Como jugador, quiero que el botón cerrar abra un aviso con "¿Salir de la sesión?", "Podés volver mientras la sesión siga abierta. El tiempo de esta pregunta sigue corriendo." y los botones **Salir** (`coral`) y **Seguir jugando** (`neutral`), para no salir sin querer.
-44. Como jugador al que se le cortó la conexión o cerró la app, quiero retomar la sesión dentro de la ventana: lo respondido cuenta, la pregunta en pantalla mantiene su cronómetro de servidor y las no mostradas me esperan; al volver voy directo, sin pantalla intermedia, a la pregunta que estaba en pantalla si todavía tiene tiempo o a la siguiente pendiente, y si la que dejé venció, primero la veo en el estado de tiempo vencido; si no la retomo, al cerrar la ventana las que faltan cuentan como error sin pulsos.
+26. Como jugador, quiero ver el chip "Pregunta 3 de 7", el botón cerrar, 7 segmentos de progreso y la barra de tiempo con la cifra, para saber dónde estoy y cuánto me queda.
+27. Como jugador, quiero tener 20 segundos por pregunta, contados por el servidor desde que me entrega la pregunta, con la barra en coral cuando quedan 5 o menos.
+28. Como jugador, quiero ver el tema en una etiqueta, el enunciado y 4 opciones (A–D) en orden aleatorio, y que la elegida diga "Elegida".
+29. Como jugador, quiero elegir cuántos pulsos arriesgo ("Elegí cuántos pulsos arriesgás": 0, 1, 5, 10 u "Otro" hasta mis pulsos disponibles, es decir, la bolsa menos lo reservado en el tema), con el monto en 0 al empezar cada pregunta.
+30. Como jugador, quiero ver antes de responder "Si acertás +5 pulsos" y "Si errás -5 pulsos" con signo y color (con monto 0, las dos dicen "0 pulsos" en `text-muted`), para conocer la consecuencia.
+31. Como jugador, quiero que **Responder** esté deshabilitado hasta elegir una opción y que, al tocarlo, envíe la opción y el monto.
+32. Como jugador, quiero recibir el doble de lo puesto si acierto, o perderlo si erro con un monto enviado a tiempo.
+33. Como jugador al que se le venció el tiempo sin tocar **Responder**, quiero que cuente como error con 0 pulsos, porque el monto elegido nunca llegó al servidor.
+34. Como jugador con mala conexión, quiero que una respuesta que llega al servidor después de los 22 segundos cuente como error con 0 pulsos, para que la conexión no me cueste pulsos.
+35. Como jugador que respondió, quiero que el tiempo se congele, las otras opciones se atenúen y la correcta diga "Correcta", para ver el resultado sin ambigüedad.
+36. Como jugador que acertó, quiero una tarjeta con "Acertaste", "+5 pulsos" y la explicación, para aprender algo en cada pregunta.
+37. Como jugador que erró, quiero ver mi opción marcada como "Incorrecta" (coral suave con cruz), la correcta con "Correcta", las otras dos atenuadas, el tiempo congelado en el segundo en que respondí y una tarjeta "No era esa" con "-5 pulsos" en `danger-text` (o "0 pulsos" en `text-muted` si no arriesgué) y la explicación; y si se me venció el tiempo, la correcta con "Correcta", las otras tres atenuadas sin ninguna elegida, el temporizador en 0 (barra vacía y la cifra "0" en `danger-text`) y una tarjeta "Se terminó el tiempo" con "0 pulsos" en `text-muted`, "Cuenta como error, no perdiste pulsos." y la explicación, para entender qué pasó sin sentir culpa. Los dos estados están definidos en texto, sin imagen de referencia.
+38. Como jugador, quiero el botón **Siguiente pregunta**, para avanzar a mi ritmo entre preguntas.
+39. Como jugador, quiero no ver nunca una pregunta que ya respondí en cualquier partida, para que el juego mida lo que sé y no lo que memoricé.
+40. Como jugador con 0 pulsos disponibles y pulsos reservados en el tema, quiero seguir la sesión con monto 0 y que mis aciertos cuenten para las dos tarjetas del tema, porque no estoy expulsado.
+41. Como jugador, quiero que el botón cerrar abra un aviso con "¿Salir de la sesión?", "Podés volver mientras la sesión siga abierta. El tiempo de esta pregunta sigue corriendo." y los botones **Salir** (`coral`) y **Seguir jugando** (`neutral`), para no salir sin querer.
+42. Como jugador al que se le cortó la conexión o cerró la app, quiero retomar la sesión dentro de la ventana: lo respondido cuenta, la pregunta en pantalla mantiene su cronómetro de servidor y las no mostradas me esperan; al volver voy directo, sin pantalla intermedia, a la pregunta que estaba en pantalla si todavía tiene tiempo o a la siguiente pendiente, y si la que dejé venció, primero la veo en el estado de tiempo vencido; si no la retomo, al cerrar la ventana las que faltan cuentan como error sin pulsos.
 
 **Cierre de la sesión**
 
-45. Como jugador, quiero ver un resumen al terminar la 7ª pregunta con mis aciertos del día, el resultado de "Al menos X de las 7", los pulsos netos del día, mi bolsa y mi posición, y el resultado de "Ganar la sesión" si ya se resolvió, para cerrar el día.
-46. Como jugador, quiero que "al menos X" se resuelva cuando termino mis 7 preguntas (o al cerrar la ventana si no retomé) y que las ganancias se sumen a mi bolsa.
-47. Como jugador, quiero que "ganar la sesión" se resuelva cuando todos los jugadores en pie terminaron o al cerrar la ventana, que gane quien más aciertos tenga entre quienes jugaron (hayan arriesgado o no) y que el empate se defina por menor tiempo total.
-48. Como jugador que puso confianza en "ganar la sesión", quiero que se me devuelva lo arriesgado si jugaron menos de 2, para no perder por falta de rivales.
-49. Como jugador que terminó su día 5, quiero que el resumen me avise que los resultados finales salen cuando todos terminen.
-50. Como jugador cuya bolsa total llegó a 0, quiero una hoja que me diga qué pasó ("Te quedaste sin Pulsos en esta partida"), qué sigue y un momento de reflexión con datos concretos ("Arriesgaste el 80% de tu bolsa en 3 preguntas"): al terminar la pregunta que la vació, o, si pasó después de mi sesión al resolverse "ganar la sesión", la próxima vez que abro la partida o por notificación push.
-51. Como jugador, quiero que si la ventana cierra sin que jugué, ese día cuente con 0 aciertos, sin cobrar ni pagar nada y sin tocar mi bolsa.
+43. Como jugador, quiero ver un resumen al terminar la 7ª pregunta con mis aciertos del día, el resultado de "Al menos X de las 7", los pulsos netos del día, mi bolsa y mi posición, y el resultado de "Ganar la sesión" si ya se resolvió, para cerrar el día.
+44. Como jugador, quiero que "al menos X" se resuelva cuando termino mis 7 preguntas (o al cerrar la ventana si no retomé) y que las ganancias se sumen a mi bolsa.
+45. Como jugador, quiero que "ganar la sesión" se resuelva cuando todos los jugadores en pie terminaron o al cerrar la ventana, que gane quien más aciertos tenga entre quienes jugaron (hayan arriesgado o no) y que el empate se defina por menor tiempo total.
+46. Como jugador que puso confianza en "ganar la sesión", quiero que se me devuelva lo arriesgado si jugaron menos de 2, para no perder por falta de rivales.
+47. Como jugador que terminó su día 5, quiero que el resumen me avise que los resultados finales salen cuando todos terminen.
+48. Como jugador cuya bolsa total llegó a 0, quiero una hoja que me diga qué pasó ("Te quedaste sin Pulsos en esta partida"), qué sigue y un momento de reflexión con datos concretos ("Arriesgaste el 80% de tu bolsa en 3 preguntas"): al terminar la pregunta que la vació, o, si pasó después de mi sesión al resolverse "ganar la sesión", la próxima vez que abro la partida o por notificación push.
+49. Como jugador, quiero que si la ventana cierra sin que jugué, ese día cuente con 0 aciertos, sin cobrar ni pagar nada y sin tocar mi bolsa.
 
 **Fin de partida**
 
-52. Como jugador, quiero que el fin de partida aparezca cuando la partida se resuelve (el último jugador en pie termina el día 5, cierra la ventana del día 5 o queda uno solo), por notificación push o al abrir la app, y no cuando termino mi propio día 5.
-53. Como jugador, quiero ver el chip "Partida terminada", el título de la partida y mi puesto final ("Quedaste 2º de 4 jugadores").
-54. Como jugador, quiero ver el aro grande del contador general con mi Aura, la palabra "Aura", una marca en el punto de partida y cuánto me falta para la siguiente ("22 de 25 pulsos para tu 2ª aura").
-55. Como jugador, quiero ver lo ganado o perdido en la partida ("Ganaste +6" o "Perdiste -N") con signo y color, y si cambió mi emblema.
-56. Como jugador, quiero que, si el aro se completa, el Aura suba con un solo pulso de 600 ms y una vibración suave, una sola vez aunque cruce más de un aura, y que si perdí pulsos baje sin animación ni rojo.
-57. Como ganador de una partida que llegó al final del día 5, quiero recibir el premio de 150 Pulsos, dividido si hay empate en el primer puesto, y ver logros no monetarios.
-58. Como último jugador en pie, quiero ganar la partida llevándome mi bolsa y lo ganado, sin el premio de 150.
-59. Como jugador, quiero que mi bolsa final vuelva completa a mi contador general, sea cual sea su valor.
-60. Como jugador, quiero tocar **Continuar** para volver al inicio.
+50. Como jugador, quiero que el fin de partida aparezca cuando la partida se resuelve (el último jugador en pie termina el día 5, cierra la ventana del día 5 o queda uno solo), por notificación push o al abrir la app, y no cuando termino mi propio día 5.
+51. Como jugador, quiero ver el chip "Partida terminada", el título de la partida y mi puesto final ("Quedaste 2º de 4 jugadores").
+52. Como jugador, quiero ver el aro grande del contador general con mi Aura, la palabra "Aura", una marca en el punto de partida y cuánto me falta para la siguiente ("22 de 25 pulsos para tu 2ª aura").
+53. Como jugador, quiero ver lo ganado o perdido en la partida ("Ganaste +6" o "Perdiste -N") con signo y color, y si cambió mi emblema.
+54. Como jugador, quiero que, si el aro se completa, el Aura suba con un solo pulso de 600 ms y una vibración suave, una sola vez aunque cruce más de un aura, y que si perdí pulsos baje sin animación ni rojo.
+55. Como ganador de una partida que llegó al final del día 5, quiero recibir el premio de 150 Pulsos, dividido si hay empate en el primer puesto, y ver logros no monetarios.
+56. Como último jugador en pie, quiero ganar la partida llevándome mi bolsa y lo ganado, sin el premio de 150.
+57. Como jugador, quiero que mi bolsa final vuelva completa a mi contador general, sea cual sea su valor.
+58. Como jugador, quiero tocar **Continuar** para volver al inicio.
 
 **Modo rápido**
 
-61. Como administrador, quiero activar el modo rápido en una partida para jugar las 5 sesiones seguidas, con el tema de la siguiente revelado apenas termina una, para probar el flujo completo sin esperar.
+59. Como administrador, quiero activar el modo rápido en una partida para jugar las 5 sesiones seguidas, con el tema de la siguiente revelado apenas termina una, para probar el flujo completo sin esperar.
 
 ## Decisiones de implementación
 
@@ -187,15 +185,13 @@ Del documento del MVP:
 
 **No bloqueantes**
 
-4. Promedio global del tema: ubicación, formato y qué mostrar si el tema no tiene historial.
-5. Botón para reportar una pregunta: ubicación, texto y si pide motivo.
-6. Contenido de la pestaña *Historial*.
-7. Emblema en el encabezado y diseño visual de cada emblema.
-8. Premio y logros en el fin de partida.
-9. Estado de sesión vencida: cómo se le informa al jugador.
-10. Pestañas "Te toca" y "Jugadas" seleccionadas, y estados vacíos del inicio.
-11. Activación e indicación del modo rápido.
-12. ¿Cómo se ve la fila de un jugador expulsado en el ranking?
+4. Contenido de la pestaña *Historial*.
+5. Emblema en el encabezado y diseño visual de cada emblema.
+6. Premio y logros en el fin de partida.
+7. Estado de sesión vencida: cómo se le informa al jugador.
+8. Pestañas "Te toca" y "Jugadas" seleccionadas, y estados vacíos del inicio.
+9. Activación e indicación del modo rápido.
+10. ¿Cómo se ve la fila de un jugador expulsado en el ranking?
 
 ## Fuera de alcance
 
@@ -206,7 +202,7 @@ Del documento del MVP:
 - Jugar varias partidas en paralelo.
 - Quiebra total y reposición tras 48 h.
 - Pantallas "Tu aura" y "Perfil", y la barra de navegación.
-- CLI de generación de preguntas, revisión de reportes y alerta del banco de preguntas al administrador.
+- CLI de generación de preguntas y alerta del banco de preguntas al administrador.
 
 **Fuera del MVP (según el documento):** tema a elección del jugador, apuesta "ganar la partida", costo de entrada variable, multiplicadores por tema, modos de especialidad, equipos y en vivo, preguntas con IA para nicho, perfil de maestría y calibración, repaso de errores y ligas, y compra de Pulsos con dinero real (descartada).
 
