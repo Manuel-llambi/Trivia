@@ -150,15 +150,25 @@ export type LedgerEntryKind =
   | 'at_least_loss'
   | 'win_session_win'
   | 'win_session_loss'
-  | 'win_session_refund'
+  // Refund (fewer than winSessionMinPlayers played) = a `topic_release` with
+  // no win/loss entry: the stake never left the bag total.
   | 'grand_prize'
   | 'bag_return'; // bag → general counter at match end
+
+/** The two moment-1 stakes; they reserve and release independently. */
+export type TopicMarket = 'at_least' | 'win_session';
 
 export interface LedgerEntry {
   readonly participantId: ParticipantId;
   readonly kind: LedgerEntryKind;
-  /** Signed change applied by this entry (see `kind` for which balance it affects). */
+  /**
+   * Signed change. `topic_reserve` / `topic_release` move `bag.reserved`
+   * (+ reserves, - releases); every other kind moves `bag.total`
+   * (`match_entry` and `bag_return` move between bag and general counter).
+   */
   readonly amount: Pulsos;
+  /** Set on topic reserve, release and settlement entries. */
+  readonly market?: TopicMarket;
 }
 
 // ---------------------------------------------------------------------------
