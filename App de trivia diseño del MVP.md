@@ -106,7 +106,7 @@ Cada jugador se hace cargo de lo que arriesga: cuánto cobrás depende solo de t
 - **Ranking y ganador:** quien más Pulsos netos ganó apostando en esa partida (todas las apuestas: por pregunta, "al menos X" y "ganar la sesión"). Apostar bien se basa en saber y en animarse a respaldarlo.
 - **Empates en el ranking:** los empatados en Pulsos netos comparten el puesto y el siguiente salta (1º, 2º, 2º, 4º). Los dos empatados en el 2º puesto ven "Vas 2º".
 - **Aciertos:** se muestran como dato y logro, pero no definen al ganador.
-- **Premio:** 150 Pulsos para el 1° puesto, **solo si la partida llega al final del día 5**. Si hay empate en el primer puesto, el premio se divide entre los empatados.
+- **Premio:** 150 Pulsos para el 1° puesto, **solo si la partida llega al final del día 5 con al menos 2 jugadores en pie**. Si al resolverse el día 5 queda un solo jugador en pie (o ninguno), la partida termina como "último en pie" y no hay premio. Si hay empate en el primer puesto, el premio se divide entre los empatados y se redondea hacia abajo (150 entre 4 = 37 cada uno).
 - **Del 2° puesto en adelante:** se quedan con su bolsa final. Para sostener el interés se muestran logros no monetarios: mejor día, mejor apuesta, aciertos y un título de calibración.
 
 ## Aura, emblemas y cards
@@ -217,7 +217,7 @@ La app no calcula nada que afecte Pulsos: envía respuestas y apuestas, y el ser
 - **Ventana que cierra con la pantalla abierta:** en el inicio y el detalle, la card y la pantalla se actualizan solas (chip "Cerrada", **Ver ranking**). En la pantalla del tema antes de confirmar, **Jugar la sesión** se rechaza con "Esta sesión ya cerró. No se movieron pulsos." y **Volver a la partida**. En medio de las preguntas, las que faltan cuentan como error sin Pulsos y se ve "La sesión cerró. Las preguntas que faltaban cuentan como error, sin pulsos." con **Volver a la partida**.
 - **Pulsos disponibles en 0 con reservas de tema:** seguís jugando la sesión con monto 0; los aciertos cuentan para "al menos X" y "ganar la sesión". No es expulsión.
 - **Expulsión:** se evalúa sobre la bolsa total una vez resueltas las reservas; fuera de esa partida con el resultado congelado; las otras partidas siguen y no hay bloqueo. Si la bolsa llega a 0 después de tu sesión, te enterás la próxima vez que abrís esa partida o por notificación push.
-- **Queda un solo jugador en pie:** la partida termina y gana sin el premio de 150. Esto evita que dos jugadores fabriquen Pulsos dejándose expulsar a propósito.
+- **Queda un solo jugador en pie:** la partida termina y gana sin el premio de 150, aunque pase al resolverse el día 5. Si no queda ninguno en pie (los últimos quedan expulsados en la misma resolución), tampoco hay premio. Esto evita que dos jugadores fabriquen Pulsos dejándose expulsar a propósito.
 - **Quiebra total:** 48 h de espera y reposición de 50 Pulsos.
 - **Empates:** en el ranking, los empatados comparten el puesto (1º, 2º, 2º, 4º); el premio mayor se divide entre los empatados en el primer puesto; "ganar la sesión" se desempata por menor tiempo total (una pregunta vencida, tardía o no mostrada suma 20 segundos) y, si persiste el empate, ganan todos los empatados con pago completo.
 - **"Ganar la sesión" con menos de 2 jugadores en la sesión:** se devuelve lo apostado.
