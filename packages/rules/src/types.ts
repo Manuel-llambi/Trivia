@@ -195,7 +195,7 @@ export interface Standing {
 
 export type MatchEndReason =
   | 'completed' // last day resolved → grand prize applies
-  | 'last_standing'; // only one participant left → no grand prize
+  | 'last_standing'; // one or zero participants left (even on the last day) → no grand prize
 
 // ---------------------------------------------------------------------------
 // Aura
