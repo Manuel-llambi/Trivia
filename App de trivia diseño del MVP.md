@@ -1,6 +1,6 @@
 # App de trivia: diseño del MVP
 
-Oct 22, 2026 · @Manu · Actualizado Nov 17, 2026
+Oct 22, 2026 · @Manu · Actualizado Nov 21, 2026
 
 ## Resumen
 
@@ -82,7 +82,8 @@ Cada jugador se hace cargo de lo que arriesga: cuánto cobrás depende solo de t
 | 8 | ×7,2 | 36 (ganás 31) |
 
 - **Quién gana:** quien más aciertos tiene entre todos los que jugaron la sesión, hayan apostado o no.
-- **Empate en aciertos:** gana quien tardó menos tiempo total en responder.
+- **Empate en aciertos:** gana quien tardó menos tiempo total en responder. Cada pregunta respondida a tiempo suma el tiempo medido por el servidor; una pregunta vencida, una respuesta que llegó después de los 22 segundos o una pregunta que no se llegó a mostrar suman los 20 segundos completos.
+- **Empate en aciertos y en tiempo total:** ganan todos los empatados y cada uno cobra su pago completo.
 - **Menos de 2 jugaron la sesión:** se devuelve lo apostado.
 - **Si no ganás,** perdés lo apostado.
 - **Cuándo se resuelve:** cuando todos los jugadores en pie terminaron la sesión del día, o al cerrar la ventana. Quien no juega ese día no suma ni resta.
@@ -218,7 +219,7 @@ La app no calcula nada que afecte Pulsos: envía respuestas y apuestas, y el ser
 - **Expulsión:** se evalúa sobre la bolsa total una vez resueltas las reservas; fuera de esa partida con el resultado congelado; las otras partidas siguen y no hay bloqueo. Si la bolsa llega a 0 después de tu sesión, te enterás la próxima vez que abrís esa partida o por notificación push.
 - **Queda un solo jugador en pie:** la partida termina y gana sin el premio de 150. Esto evita que dos jugadores fabriquen Pulsos dejándose expulsar a propósito.
 - **Quiebra total:** 48 h de espera y reposición de 50 Pulsos.
-- **Empates:** en el ranking, los empatados comparten el puesto (1º, 2º, 2º, 4º); el premio mayor se divide entre los empatados en el primer puesto; "ganar la sesión" se desempata por menor tiempo total.
+- **Empates:** en el ranking, los empatados comparten el puesto (1º, 2º, 2º, 4º); el premio mayor se divide entre los empatados en el primer puesto; "ganar la sesión" se desempata por menor tiempo total (una pregunta vencida, tardía o no mostrada suma 20 segundos) y, si persiste el empate, ganan todos los empatados con pago completo.
 - **"Ganar la sesión" con menos de 2 jugadores en la sesión:** se devuelve lo apostado.
 - **Preguntas:** sin repeticiones para ningún jugador entre partidas; opciones en orden aleatorio; la respuesta correcta nunca llega a la app antes de contestar.
 - **Banco de preguntas agotado en un tema:** el servidor sortea el tema del día solo entre los temas con al menos 7 preguntas no vistas por ningún jugador de la partida, sin que el jugador lo note. El administrador recibe una alerta cuando un tema baja del umbral configurado.
