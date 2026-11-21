@@ -13,12 +13,18 @@ export function availablePulsos(bag: Bag): Pulsos {
   return bag.total - bag.reserved;
 }
 
+/** Upper bound for a question stake: available Pulsos, limited by the cap if any. */
+export function maxQuestionStake(bag: Bag, config: RulesConfig): Pulsos {
+  const available = availablePulsos(bag);
+  return config.questionStakeCap === null ? available : Math.min(available, config.questionStakeCap);
+}
+
 /**
- * A question stake must be a whole, non-negative amount that fits in the
- * available Pulsos, so reserved + stake never exceeds the bag.
+ * A question stake must be a whole, non-negative amount up to the max stake,
+ * so reserved + stake never exceeds the bag.
  */
-export function isValidQuestionStake(stake: Pulsos, bag: Bag): boolean {
-  return Number.isInteger(stake) && stake >= 0 && stake <= availablePulsos(bag);
+export function isValidQuestionStake(stake: Pulsos, bag: Bag, config: RulesConfig): boolean {
+  return Number.isInteger(stake) && stake >= 0 && stake <= maxQuestionStake(bag, config);
 }
 
 /**

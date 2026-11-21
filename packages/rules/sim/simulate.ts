@@ -1,5 +1,5 @@
 import { applyEntries, isExpelled, matchEndReason, rankStandings, settleMatchEnd } from '../src/match.ts';
-import { availablePulsos, settleQuestion } from '../src/question.ts';
+import { availablePulsos, maxQuestionStake, settleQuestion } from '../src/question.ts';
 import { countCorrect, isValidTopicStakes, reserveTopicStakes, settleAtLeast } from '../src/topic.ts';
 import type {
   Bag,
@@ -83,7 +83,7 @@ export function simulateMatch(table: readonly Profile[], scenario: Scenario, con
         const knows = rng() < known;
         const correct = knows || rng() < 0.25;
         const risk = p.profile.betOnlyWhenKnown && !knows ? 0 : p.profile.questionStake;
-        const stake = amountFor(risk, availablePulsos(p.bag));
+        const stake = Math.min(amountFor(risk, availablePulsos(p.bag)), maxQuestionStake(p.bag, config));
         const submission: QuestionSubmission =
           rng() < scenario.expiryRate
             ? { kind: 'unanswered' }

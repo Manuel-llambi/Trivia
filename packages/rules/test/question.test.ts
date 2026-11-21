@@ -3,6 +3,7 @@ import {
   availablePulsos,
   classifyQuestion,
   isValidQuestionStake,
+  maxQuestionStake,
   settleQuestion,
 } from '../src/question.ts';
 import { mvpConfig } from './fixtures.ts';
@@ -70,24 +71,43 @@ describe('isValidQuestionStake', () => {
   const bag = { total: 62, reserved: 5 };
 
   it('accepts 0 and any whole amount up to the available Pulsos', () => {
-    expect(isValidQuestionStake(0, bag)).toBe(true);
-    expect(isValidQuestionStake(57, bag)).toBe(true);
+    expect(isValidQuestionStake(0, bag, mvpConfig)).toBe(true);
+    expect(isValidQuestionStake(57, bag, mvpConfig)).toBe(true);
   });
 
   it('rejects amounts above the available Pulsos (bag never goes negative)', () => {
-    expect(isValidQuestionStake(58, bag)).toBe(false);
+    expect(isValidQuestionStake(58, bag, mvpConfig)).toBe(false);
   });
 
   it('only allows 0 when everything is reserved', () => {
     const fullyReserved = { total: 20, reserved: 20 };
-    expect(isValidQuestionStake(0, fullyReserved)).toBe(true);
-    expect(isValidQuestionStake(1, fullyReserved)).toBe(false);
+    expect(isValidQuestionStake(0, fullyReserved, mvpConfig)).toBe(true);
+    expect(isValidQuestionStake(1, fullyReserved, mvpConfig)).toBe(false);
   });
 
   it('rejects negative, fractional and non-finite amounts', () => {
-    expect(isValidQuestionStake(-1, bag)).toBe(false);
-    expect(isValidQuestionStake(2.5, bag)).toBe(false);
-    expect(isValidQuestionStake(Number.NaN, bag)).toBe(false);
-    expect(isValidQuestionStake(Number.POSITIVE_INFINITY, bag)).toBe(false);
+    expect(isValidQuestionStake(-1, bag, mvpConfig)).toBe(false);
+    expect(isValidQuestionStake(2.5, bag, mvpConfig)).toBe(false);
+    expect(isValidQuestionStake(Number.NaN, bag, mvpConfig)).toBe(false);
+    expect(isValidQuestionStake(Number.POSITIVE_INFINITY, bag, mvpConfig)).toBe(false);
+  });
+});
+
+describe("question stake cap", () => {
+  const capped = { ...mvpConfig, questionStakeCap: 10 };
+  const bag = { total: 62, reserved: 5 };
+
+  it("limits the max stake to the cap when the bag allows more", () => {
+    expect(maxQuestionStake(bag, capped)).toBe(10);
+    expect(isValidQuestionStake(10, bag, capped)).toBe(true);
+    expect(isValidQuestionStake(11, bag, capped)).toBe(false);
+  });
+
+  it("still limits to the available Pulsos when they are below the cap", () => {
+    expect(maxQuestionStake({ total: 8, reserved: 2 }, capped)).toBe(6);
+  });
+
+  it("has no cap when the config says null", () => {
+    expect(maxQuestionStake(bag, mvpConfig)).toBe(57);
   });
 });

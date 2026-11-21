@@ -9,6 +9,7 @@ export const MVP_CONFIG: RulesConfig = {
   questionsPerSession: 7,
   visibleAnswerMs: 20_000,
   acceptedAnswerMs: 22_000,
+  questionStakeCap: null,
   entryCost: 50,
   pulsosPerAura: 25,
   atLeastTiers: [
