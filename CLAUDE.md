@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado del proyecto
 
-Este es un **repositorio de diseño previo al código** para una app móvil de trivia (nombre provisorio "Trivia confianza"). Todavía no hay código fuente, manifiesto de paquetes, build, lint ni pruebas, y tampoco repositorio git. Todo el contenido es definición de producto y diseño, escrito en español rioplatense (voseo).
+Repositorio de una app móvil de trivia (nombre provisorio "Trivia confianza"), en la transición de diseño a código. La definición de producto y diseño está completa y escrita en español rioplatense (voseo). El código es solo un esqueleto: ninguna historia está implementada todavía. Remoto: `https://github.com/Manuel-llambi/Trivia` (rama `main`).
+
+Avance del pipeline del primer flujo: 21 historias en `docs/02-historias/historias.md` (H7 y H15 se eliminaron el 21 de noviembre de 2026 junto con el promedio global del tema y el reporte de preguntas; los números de las demás no se reasignan). Mapeadas en `docs/03-component-maps/`: H1, H2, H4, H6, H8–H14 y H16. Faltan mapear: H3, H5 y H17–H23.
 
 | Archivo / carpeta | Qué es |
 | --- | --- |
@@ -12,11 +14,25 @@ Este es un **repositorio de diseño previo al código** para una app móvil de t
 | `Trivia_DS_completo.md` | Sistema de diseño "Trivia DS Suave": principios, tokens, componentes, plantillas, tabla de contraste WCAG, notas de implementación en Expo/RN y apéndices `tokens.css` y `bundle.css` (actualizado el 17 de noviembre de 2026). |
 | `PRD - Trivia confianza MVP.md` | PRD del primer flujo ("Jugar una partida activa"), derivado del MVP, las referencias y el DS. Si contradice al MVP, manda el MVP. |
 | `docs/02-historias/historias.md` | Historias de usuario del primer flujo, con las decisiones de producto del 17 de noviembre de 2026 y las preguntas abiertas. Las genera el agente `historias-generator`. |
+| `docs/03-component-maps/` | Un `component-map-HX.md` por historia mapeada contra el DS, más `_consistency-report.md` con las resoluciones entre historias. |
+| `mobile/` | App Expo SDK 58 con Expo Router y TypeScript. Por ahora: tokens del DS en `src/theme/tokens.ts`, `theme-provider.tsx`, cliente de Supabase en `src/lib/supabase.ts` y una pantalla `src/app/index.tsx` provisoria. Leer `mobile/AGENTS.md` antes de tocar APIs de Expo. |
+| `supabase/` | Proyecto de Supabase CLI: solo `config.toml`. Todavía sin migraciones ni funciones. |
 | `.claude/agents/` | Pipeline de agentes: `historias-generator` → `component-mapper` × N + `consistency-checker` → `implementacion-planner`. Ver su `README.md`. |
 | `Referencias-y-definiciones/Pantalla-UI/` | Pantallas de referencia del primer flujo (Dashboard, Match Detail, Topic Reel, Pregunta, Fin de partida). Mandan sobre el detalle visual. |
 | `Referencias-y-definiciones/Animaciones/` | Prototipos HTML independientes de la rueda de tema, el cierre de aura y la animación de fin de partida. |
 | `Inspiracion UI/` | Solo inspiración visual, no es especificación. |
 | `.claude/skills/folder-to-spec/` | Skill del proyecto (`/folder-to-spec <ruta>`) que convierte una carpeta en una especificación. |
+
+## Comandos (desde `mobile/`)
+
+```bash
+npx expo start          # servidor de desarrollo
+npx expo lint           # lint
+npx tsc --noEmit        # chequeo de tipos
+npx expo install <pkg>  # agregar dependencias (nunca npm install directo)
+```
+
+No hay pruebas todavía. Variables de entorno en `mobile/.env.local` (ignorado por git): `EXPO_PUBLIC_SUPABASE_URL` y `EXPO_PUBLIC_SUPABASE_ANON_KEY`.
 
 ## Antes de implementar (obligatorio)
 
@@ -39,7 +55,7 @@ El MVP y el DS se alinearon con las referencias el 17 de noviembre de 2026. Si a
 - **El competidor se modela como "participante"**, para que a futuro pueda ser un usuario o un equipo.
 - **"Modo rápido" solo para administrador:** juega las 5 sesiones seguidas para pruebas.
 - **Simulación de la economía** (miles de partidas con jugadores de 30/60/90% de precisión) obligatoria antes de cualquier usuario real.
-- **El pipeline de preguntas está fuera de la app:** una CLI local recibe PDFs/links/texto → llama a la API de Claude → genera JSON (pregunta, 4 opciones, respuesta correcta, explicación, fuente) → revisión humana del 100% → un segundo comando carga en Supabase solo las aprobadas.
+- **El pipeline de preguntas está fuera de la app:** una CLI local recibe PDFs/links/texto → llama a la API de Claude → genera JSON (pregunta, 4 opciones, respuesta correcta, explicación, fuente) → revisión humana del 100% → un segundo comando carga en Supabase solo las aprobadas. En el MVP los jugadores no reportan errores desde la app.
 
 ## Esenciales del sistema de diseño
 
