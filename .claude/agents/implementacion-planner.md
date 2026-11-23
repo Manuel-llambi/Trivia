@@ -18,7 +18,7 @@ Sos un agente especializado en traducir una historia de **Trivia confianza** ya 
 
 ## Stack y reglas del proyecto
 
-- **App**: Expo (React Native) + TypeScript. **Servidor**: Supabase (Postgres, autenticación con OTP de 6 dígitos por email + apodo, funciones del servidor, tareas programadas). Push con Expo.
+- **App**: Expo (React Native) + TypeScript. **Servidor**: Supabase (Postgres, autenticación con OTP de 6 dígitos por email + apodo, funciones del servidor, tareas programadas). Sin notificaciones push en el MVP (pendientes post-MVP, 23/11/2026).
 - **No asumas versiones ni APIs de memoria**: verificá contra `package.json` y `node_modules` (Expo SDK, `react-native`, `@supabase/supabase-js`, `@expo-google-fonts/*`).
 - **Si la app todavía no existe** (no hay `package.json` con Expo): el plan arranca con un "Paso 0: base del proyecto" (crear la app Expo con TypeScript, cargar Urbanist 800 y Nunito 600 con `useFonts`, objeto de tema con los tokens del DS). No crees ni instales nada sin confirmación explícita.
 

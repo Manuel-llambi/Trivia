@@ -10,7 +10,7 @@ Como jugador, quiero ver mi puesto, lo que llevo ganado y el ranking de la parti
 - Servidor: calcula ranking, posición, netos, aciertos y quién no jugó; informa la hora de cierre de la ventana.
 - Experiencia: cargando y error con reintento; netos con signo y color (negativo con "-" y en rojo); jugador expulsado sin botón de jugar pero con el ranking visible; ningún dato depende solo del color.
 - Casos borde: empate (1º, 2º, 2º, 4º); la ventana cierra con el detalle abierto (el botón deja de estar disponible); fila de jugador expulsado sin referencia.
-- Dependencia: H2. Fuera de alcance en esta corrida: H5 (contenido de Historial) y H6 se tratan como no disponibles / solo destino de navegación.
+- Dependencia: H2. Fuera de alcance en este mapa: H5 (contenido de Historial, ya definido en `component-map-H5.md`) y H6 (solo destino de navegación).
 
 ## Referencias revisadas
 - `Referencias-y-definiciones/Pantalla-UI/Match Detail/Ranking.png` — encabezado `forest` con volver, chip "DÍA 3 DE 5", título "Trivia de los viernes", "6 jugadores · Cierra en 6 h"; tarjeta "TU PUESTO 3º" + "+24 pulsos ganados"; control segmentado Ranking/Historial; "POSICIONES ACTUALES"; 6 filas (1º con disco amarillo y fondo verde suave; "Vos" en celeste con borde; Camila atenuada en grises con "No jugó 2 días"); botón verde "Jugar la sesion" (sin tilde, error de tipeo).
@@ -28,29 +28,29 @@ Como jugador, quiero ver mi puesto, lo que llevo ganado y el ranking de la parti
 - `Button` `neutral` cuadrado/icónico sobre `forest` (volver) — ver gap.
 - Chip `brand-soft` "Día 3 de 5" (`StatPill`/chips, `label` mayúsculas, `radius-pill`).
 - Tarjeta "Tu puesto" (`surface`, `radius-lg`, `shadow-soft`) con la cifra de posición en `display` `number-xl` y el neto como cifra de pulsos con signo (`d-coins--up` / `d-coins--down`).
-- Control segmentado Ranking / Historial — gap (no es componente nombrado; la plantilla Inicio lo usa igual).
+- Control segmentado Ranking / Historial — componente compartido con el Inicio (H3) y H5 (N1, PO 23/11/2026); ver Gaps.
 - `LeaderboardRow`, estados: normal (blanca), primero (`data-first`: `brand-soft` + disco `sun` con labio), "Vos" (`data-me`: `sky-soft` + borde `edge` 2px), eliminado/sin jugar (`data-out`: atenuada, avatar gris, motivo en texto).
 - Avatares (disco con inicial en `display`, `avatar-md` 44px) dentro de cada fila.
 - `Button` `brand` "Jugar la sesión" — único botón fuerte de la pantalla.
 - Etiqueta de grupo "Posiciones actuales" (`label`, `text-muted`).
 
 ## Componentes a extender
-- `LeaderboardRow` — la referencia solo ilustra "No jugó 2 días". Hay que definir la prop de motivo (texto libre del servidor o enumerado) y distinguir `data-out` por "no jugó" de `data-out` por "expulsado" (ver gaps). Soportar puesto compartido (mostrar el mismo número en filas empatadas).
+- `LeaderboardRow` — la referencia solo ilustra "No jugó 2 días". Motivos resueltos (N8, PO 23/11/2026): "Sin pulsos" para el expulsado y "No jugó N días" para quien no jugó. Falta definir si la prop de motivo es texto libre del servidor o enumerado. Soportar puesto compartido (mostrar el mismo número en filas empatadas).
 - `LeaderboardRow` — el disco `sun` del 1º aplica solo al primer puesto; con empate en el 1º, los empatados comparten el destaque (el MVP divide el premio entre empatados).
 
 ## Gaps
-- Control segmentado (Ranking/Historial) — no existe como componente en el DS (solo descrito en plantillas) — no existe en el DS.
-  - **Resolución temporal sugerida**: pista `surface-2` con segmento activo `surface`, tal como lo describe la plantilla Inicio; tap-min 52px de alto. Provisoria hasta que se nombre el componente.
-- Pestaña Historial (contenido) — sin referencia; es H5 (fuera de alcance).
-  - **Resolución temporal sugerida**: la pestaña se muestra pero, mientras H5 no exista, o se oculta el control segmentado o se muestra la pestaña con un estado vacío neutro. Decisión del PO; no inventar contenido.
+- Control segmentado (Ranking/Historial) — no existe como componente en el DS (solo descrito en plantillas).
+  - **Resuelto (N1, PO 23/11/2026)**: un único componente compartido con el Inicio (H3) y H5: pista `surface-2` `radius-pill`; segmento activo `surface` con `shadow-soft`; texto `display` 800 (`text` en el activo, `text-muted` en los inactivos); alto mínimo `tap-min`; rol tab con `accessibilityState.selected`; sin labio ni color fuerte.
+- Pestaña Historial (contenido) — sin referencia; es H5.
+  - **Resuelto (N1; contenido, PO 23/11/2026)**: el control segmentado se muestra. El contenido de la pestaña Historial está definido en `component-map-H5.md`: una fila de resumen por día ya jugado ("Día 2 · Historia · 5 de 7 aciertos · +12"), con las filas etiqueta/valor de H17; el estado vacío neutro "Todavía no hay días anteriores" queda solo para cuando no hay días.
 - Botón volver sobre `forest` — el DS tiene solo 4 variantes de `Button`; la referencia muestra un botón circular translúcido sobre `forest` — no existe en el DS.
   - **Resolución temporal sugerida**: `Button` `neutral` (o `ghost`) cuadrado/circular con ícono flecha, 52px mínimo; la referencia usa 44px aprox. y tiene fondo translúcido, no ajustarlo en silencio.
 - Fila de jugador expulsado — sin referencia (la propia historia lo marca como duda para el PO).
-  - **Resolución temporal sugerida**: reutilizar `data-out` (atenuada, avatar en grises) con motivo neutro tipo "Fuera de la partida", sin rojo y sin culpa; pulsos mostrados en neutro. Provisorio.
+  - **Resuelto (N8, PO 23/11/2026)**: `data-out` (atenuada, avatar en grises) con motivo "Sin pulsos", sin rojo y sin culpa; pulsos mostrados en neutro.
 - Estados cargando y error con reintento — sin referencia ni patrón en el DS.
   - **Resolución temporal sugerida**: cargando con placeholders de `surface-2` en la forma de las filas; error con texto sin culpa y un `Button` `neutral` "Reintentar". Marcado como duda; no elegir patrón definitivo.
 - Tarjeta "Tu puesto" cuando el jugador está expulsado o aún no tiene puesto — sin referencia.
-  - **Resolución temporal sugerida**: mantener la tarjeta con el puesto congelado y neto en neutro si es 0.
+  - **Resolución temporal sugerida**: mantener la tarjeta con el puesto congelado y el neto de la partida (N8: "Tu puesto" siempre muestra el neto de la partida), en neutro si es 0.
 - Subtítulo "Cierra en 6 h" cuando la ventana ya cerró o quedan minutos — sin referencia del formato (horas/minutos/cerrada).
   - **Resolución temporal sugerida**: "Cerrada" o similar sin urgencia en rojo; formato a definir.
 - Ranking con muchos jugadores (scroll) y posición propia fuera de pantalla — sin referencia (la referencia muestra 6 filas).
@@ -92,7 +92,6 @@ Como jugador, quiero ver mi puesto, lo que llevo ganado y el ranking de la parti
 ## Riesgos y dudas
 - **Texto del neto negativo**: "+24 pulsos ganados" no sirve con signo "-"; la historia exige "-" y rojo pero no define la etiqueta ("-8 pulsos perdidos"? "-8 pulsos"?). Necesita decisión del PO, sin culpa en el texto. Esta es la duda más importante.
 - Fila de jugador expulsado sin referencia (la historia lo reconoce): se usó la resolución provisoria con `data-out` y texto neutro.
-- Historial (H5) no existe aún: no está claro si mostrar el control segmentado con una pestaña vacía.
 - Estados cargando y error con reintento sin patrón del DS; es un punto típico de inconsistencia entre historias, definir uno común.
 - Botón volver: forma y color de la referencia no coinciden con las 4 variantes de `Button`.
 - La referencia muestra el disco "1" del primero y "3" de "Vos" con avatar con anillo blanco; el DS no especifica ese anillo, tomado de la imagen.

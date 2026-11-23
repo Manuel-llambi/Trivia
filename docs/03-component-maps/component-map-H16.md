@@ -9,7 +9,7 @@ Como jugador, quiero saber qué pasa si cierro la sesión o se corta la conexió
 - Las preguntas no mostradas no vencen mientras el jugador está afuera. Si la ventana cierra con preguntas sin mostrar, cuentan como error sin pulsos arriesgados y "al menos X" se resuelve con los aciertos registrados.
 - Sin conexión: mensaje sin culpa y acción para reintentar; nunca se muestra un resultado que el servidor no confirmó.
 - Casos borde: respuesta enviada justo antes de cortarse (al reconectar se muestra lo que registró el servidor); monto elegido sin enviar que vence afuera: error con 0 pulsos, no se pierde el monto.
-- Dependencia: H11. Fuera de alcance en esta corrida (no disponibles todavía): H3, H5, H7, H15, H17–H23. Tras la 7ª pregunta la sesión vuelve al detalle de partida como cierre provisorio hasta que se diseñe el resumen del día (H17).
+- Dependencia: H11. Fuera de alcance en esta corrida (no disponibles todavía): H3, H5, H7, H15, H17–H23. Tras la 7ª pregunta la sesión lleva al Resumen del día (H17), y de ahí al Detalle de partida con `brand` "Ver partida" (N2, PO 23/11/2026).
 
 ## Referencias revisadas
 - `Referencias-y-definiciones/Pantalla-UI/Pregunta/Elegida.png` — encabezado de la pregunta: chip "PREGUNTA 3 DE 7", botón cerrar cuadrado `neutral` con "X" arriba a la derecha, 7 pasos, temporizador (barra + "0:09"), tema, enunciado, 4 `AnswerCard`, `ConfidenceControl`, celdas de ganancia/pérdida y botón "Responder" (`brand`). Es la única referencia: el `Overlay` y los estados sin conexión no tienen imagen.
@@ -22,7 +22,8 @@ Como jugador, quiero saber qué pasa si cierro la sesión o se corta la conexió
 - Pregunta en estado de tiempo vencido, al retomar tarde — plantilla del DS: Pregunta (`ResultCard` de tiempo vencido).
 - Pregunta al retomar con tiempo restante o siguiente pendiente — plantilla del DS: Pregunta.
 - Estado sin conexión / error al reanudar — sin plantilla (gap).
-- Detalle de partida, como cierre provisorio de la sesión y destino de "Salir" — plantilla del DS: Detalle de partida.
+- Resumen del día (H17), tras la 7ª pregunta.
+- Detalle de partida, destino de "Salir" y de "Ver partida" del resumen — plantilla del DS: Detalle de partida.
 
 ## Componentes del DS a usar
 - `Overlay` "Salir de la sesión" — velo + tarjeta `surface`, `radius-lg`, `shadow-float`; título en `display`, texto en `body`, dos botones.
@@ -46,8 +47,6 @@ Como jugador, quiero saber qué pasa si cierro la sesión o se corta la conexió
   - **Resolución temporal sugerida (provisoria)**: reutilizar `Overlay` de un solo botón `brand` "Reintentar" y texto sin culpa, o un bloque `surface` dentro de la pantalla con `Button` `neutral` "Reintentar". Dejar la decisión a diseño (ver Riesgos).
 - Estado de espera mientras se consulta al servidor al volver (cargando) — no hay patrón de carga en el DS; la historia dice "sin pantalla intermedia" — no existe en el DS.
   - **Resolución temporal sugerida (provisoria)**: mantener la pantalla anterior o la barra de pasos sin contenido; mostrar la pregunta solo cuando el servidor confirmó el estado. No inventar splash.
-- Resumen del día tras la 7ª pregunta — sin referencia y fuera de alcance (H17).
-  - **Resolución temporal sugerida (provisoria)**: volver al detalle de partida (`Detalle de partida`) con "Jugar la sesión" ya no disponible; sin diseño nuevo.
 - Estado de la pregunta "ya registrada" al reconectar tras una respuesta enviada justo antes del corte — reutiliza `ResultCard` acierto/error (sin referencia para error, ver DS); el DS lo define textual, no hay imagen — sin referencia.
   - **Resolución temporal sugerida (provisoria)**: mostrar el `ResultCard` correspondiente con lo que registró el servidor, mismo armado que la plantilla.
 - Comportamiento si la ventana de 24 h ya cerró al volver — la historia no lo define visualmente — sin referencia.
@@ -90,7 +89,7 @@ Como jugador, quiero saber qué pasa si cierro la sesión o se corta la conexió
 ## Riesgos y dudas
 - **Feedback de sin conexión sin definir**: la historia no dice si va como `Overlay`, bloque en pantalla o banner. Es un punto típico de inconsistencia entre historias (H11, H12, H13 y otras también piden "reintentar"); conviene un único patrón decidido por diseño. No se eligió uno.
 - Tocar el velo del `Overlay` equivale a cancelar según el DS, pero con "Salir" destructiva conviene confirmar que no sale por accidente (aquí no sale: cancelar = "Seguir jugando").
-- Cuando "Salir" se confirma, el destino no está especificado en la historia; se asumió el detalle de partida (provisorio, igual que el cierre tras la 7ª pregunta hasta que exista H17).
+- Cuando "Salir" se confirma, el destino no está especificado en la historia; se asumió el detalle de partida, el mismo destino al que llevan el resumen del día y la hoja de expulsión (N2 y N3).
 - El texto "El tiempo de esta pregunta sigue corriendo" aparece también cuando el jugador sale tras haber elegido monto sin enviar: no avisa que ese monto no se pierde si vence. Evaluar si el aviso debería aclararlo (hoy se respeta el texto de la historia).
 - No hay token documentado para el velo (scrim) del `Overlay`; hay que definirlo en el DS.
 - Reintento tras un reporte duplicado u otras historias no se cruzan aquí; la consistencia con H11 (respuesta enviada) y H14 (tiempo vencido) la revisa el `consistency-checker`.

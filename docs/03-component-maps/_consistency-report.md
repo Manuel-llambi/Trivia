@@ -1,9 +1,129 @@
 # Reporte de consistencia entre historias mapeadas
 
-Generado a partir de: component-map-H1, H2, H4, H6, H8, H9, H10, H11, H12, H13, H14, H16 (los 12 de esta corrida; no hay otros mapas en la carpeta).
+Este reporte es informativo. Tiene dos corridas: la **Corrida 2 (23/11/2026)** va primero; la **Corrida 1 (17/11/2026)** y sus "Resoluciones (17/11/2026)" (R1 a R11, decididas por el PO y vigentes) siguen más abajo, intactas. Los mapas no se editaron con R1 a R11: quien implemente lee el mapa y aplica encima esas resoluciones. En cambio, las resoluciones N1 a N8 de la Corrida 2 (PO, 23/11/2026) ya están volcadas en los mapas afectados.
+
+---
+
+# Corrida 2 (23/11/2026)
+
+Generado a partir de: component-map-H1, H2, H3, H4, H5, H6, H8, H9, H10, H11, H12, H13, H14, H16, H17, H18, H19, H20, H21, H22, H23 (21 mapas; nuevos: H3, H5, H17 a H23).
+Fecha: 2026-11-23
+Contexto aplicado: desde el 23/11/2026 no hay topes de apuesta (ni por pregunta ni por carta de tema); el único límite son los Pulsos disponibles. Se revisó que ningún mapa conserve un tope: ninguno lo hace (los viejos ya hablaban de "máximo = disponibles"; los nuevos lo declaran explícito).
+
+## Conflictos detectados
+
+### N1: Control segmentado (Te toca / Jugadas / Todas y Ranking / Historial)
+- **Estado**: Resuelto (PO, 23/11/2026). Un único componente compartido por Inicio, Ranking e Historial: pista `surface-2` `radius-pill`; segmento activo `surface` con `shadow-soft`; texto `display` 800 (`text` en el activo, `text-muted` en los inactivos); alto mínimo `tap-min`; rol tab con estado seleccionado. La pestaña Historial se muestra, con un estado vacío neutro. Los textos de los vacíos siguen provisorios. Volcado en H3, H4 y H5.
+- **Historias involucradas**: H3, H4, H5 (H1 y H2 lo delegan; H23 lo menciona como inexistente)
+- **Qué pasa**: el gap sigue abierto (no está en la tabla del DS). H3 y H5 proponen casi lo mismo pero con diferencias; H4 propuso solo "pista `surface-2`".
+- **En H3** (`component-map-H3.md`): pista `surface-2` `radius-pill`/`radius-md`, activo `surface` con `shadow-soft`, texto `display`/`body`, `tap-min`, tablist/tab; "definirlo una sola vez y reutilizar en H4".
+- **En H5** (`component-map-H5.md`): pista `surface-2` `radius-pill`/`radius-lg`, activo `surface`, texto `display` 800 en `text`, inactivo `text-muted`, `tap-min`, "no inventar labio".
+- **En H4** (`component-map-H4.md`): mostrar la pestaña Historial con vacío neutro o ocultar el segmentado; H5 repite la misma duda y pide que se resuelva igual en ambas.
+- **Vacíos por pestaña**: H3 propone "No tenés partidas por jugar hoy." / "Todavía no jugaste ninguna partida hoy."; H5 "Todavía no hay días anteriores". Misma forma (bloque `surface-2`, `text-muted`), textos solo provisorios.
+- **Por qué importa**: dos construcciones casi iguales pueden terminar en dos componentes (radio `md` vs `lg`, `body` vs `display`). Es un único componente compartido por tres pantallas.
+
+### N2: Destino tras la 7ª pregunta y salida del resumen del día
+- **Estado**: Resuelto (PO, 23/11/2026). Tras la 7ª pregunta, el Resumen del día (H17) con una sola acción: `brand` "Ver partida" -> Detalle de partida (sin `neutral` "Ir al inicio"). En modo rápido el mismo botón dice "Descubrir tema" y lleva al sorteo (H6). Volcado en H12, H13, H14, H16, H17 y H23. El rótulo de "Siguiente pregunta" en la 7ª sigue abierto (Corrida 1).
+- **Historias involucradas**: H12, H13, H14, H16 (viejas) vs H17 y H23 (nuevas)
+- **En H12, H13, H14, H16**: tras la 7ª (y tras "Salir" en H16) se vuelve al Detalle de partida, "provisorio hasta que exista H17".
+- **En H17** (`component-map-H17.md`): existe una pantalla Resumen del día nueva después de la 7ª; base de plantilla Detalle de partida; `brand` "Ver partida" -> Detalle y `neutral` "Ir al inicio".
+- **En H23** (`component-map-H23.md`): en modo rápido, tras el resumen el `brand` va al sorteo del tema siguiente (H6), y ubica al resumen en la plantilla "Pregunta/Resultado" (H17 dice Detalle de partida).
+- **Por qué importa**: el mismo botón `brand` del resumen tiene dos destinos según el modo, y los mapas de H12 a H16 siguen apuntando al Detalle sin pasar por el resumen. Sigue abierto el rótulo de "Siguiente pregunta" en la 7ª (Corrida 1).
+
+### N3: Orden entre resumen del día, hoja de expulsión y fin de partida
+- **Estado**: Resuelto (PO, 23/11/2026). En una misma apertura la secuencia es resumen del día → hoja de expulsión → fin de partida. El resumen y la hoja cierran al Detalle de partida; "Continuar" del fin de partida va al Inicio. Si la expulsión ocurre en medio de la sesión no hay resumen: la hoja aparece directamente. El expulsado también ve el fin de partida cuando la partida se resuelve. Volcado en H13, H17, H18, H19 y H20.
+- **Historias involucradas**: H17, H18, H19, H20, H21, H23
+- **En H17**: tras la 7ª aparece el resumen; si la bolsa llega a 0 al resolverse "ganar la sesión" se vería "este resumen y luego la hoja"; orden "no definido".
+- **En H18** (`component-map-H18.md`): si la bolsa llega a 0 en una pregunta, la sesión termina para ese jugador ahí (nunca llega a la 7ª ni al resumen); la hoja aparece sola o al tocar "Siguiente pregunta" (duda propia) y su cierre lleva al Detalle. Si la expulsión llega al resolverse "ganar la sesión", la hoja aparece al abrir la partida, encima del Detalle (que es justo el destino "Ver partida" de H17).
+- **En H19** (`component-map-H19.md`): el fin de partida aparece al resolverse la partida (próxima apertura); "Continuar" lleva al Inicio. Para el expulsado, el aro parte del punto de partida y "Quedaste fuera de la partida" (duda propia). H18 duda si el expulsado ve "Partida terminada" o solo "Fuera de la partida".
+- **En H20**: un eliminado ve igual el fin de partida con logros. H19 y H20 no coinciden en lo que ve (H19: neto "sin cambios"; H20: logros).
+- **En H21**: orden entre `AuraClose`, cambio de emblema y bloque "Ganaste +N" no definido; el fin de partida con varias partidas resueltas se encola "una por vez" solo en H19.
+- **Por qué importa**: el mismo jugador puede tener a la vez pendientes la hoja (H18), el resumen (H17) y el fin de partida (H19) en una sola apertura (por ejemplo, expulsado en una partida de 2 cuyo otro jugador la termina). Ningún mapa fija una secuencia, qué ve el expulsado al resolverse la partida ni cuál es el destino único de cada cierre (Detalle vs Inicio).
+
+### N4: Estado "Cerrada" y "Fuera de la partida" en `MatchCard`, y en qué pestaña viven
+- **Estado**: Resuelto (PO, 23/11/2026). "Fuera de la partida" tiene prioridad sobre "Cerrada". "Te toca" muestra solo las jugables; "Jugadas", solo las jugadas hoy; "Cerrada" y "Fuera de la partida" aparecen solo en "Todas" (una jugada hoy con expulsión muestra "Fuera de la partida" y vive solo en "Todas"). Volcado en H2, H3, H18 y H22.
+- **Historias involucradas**: H2, H3, H4, H18, H22
+- **En H22** (`component-map-H22.md`): formaliza "Cerrada sin jugar" como estado persistente (hoy el DS lo define solo como transición con el Inicio abierto): chip `forest` "Cerrada", bloque gris con la bolsa y "sin cambios", `neutral` "Ver ranking", y un bloque aviso. Solo en "Todas". No usa la compacta "Jugada hoy" porque "sería falso".
+- **En H18**: estado "Fuera de la partida": chip gris, `0`, "sin pulsos", "Quedaste 4º", `neutral` "Ver ranking". Duda abierta: qué pasa cuando el expulsado también ve "Cerrada" (conviven los dos chips o gana uno).
+- **En H3** (`component-map-H3.md`): lista "Fuera de la partida" entre las `MatchCard` "que te tocan" (en "Te toca" y "Todas"), aunque no hay nada para jugar; no ubica "Cerrada" en ninguna pestaña; duda si una jugada hoy con expulsión va a "Jugadas" o muestra "Fuera".
+- **En H2/H4** (Corrida 1, R6): "Cerrada" es el chip de una ventana que vence; nada dice si es el mismo estado persistente de H22.
+- **Por qué importa**: cuatro estados terminales (Cerrada, Cerrada sin jugar, Fuera de la partida, Jugada hoy) con el mismo botón `neutral` "Ver ranking" y sin regla de pestañas. Un jugador expulsado cuyo día también venció tiene dos chips candidatos. La compacta "Jugada hoy" depende de que el jugador sí haya jugado.
+
+### N5: Textos distintos para "no se movió nada" y para "esperá a los demás"
+- **Estado**: Resuelto (PO, 23/11/2026). Se sigue la voz de R6. H22: "Esta sesión cerró sin jugarse. No se movieron pulsos." Estado pendiente de "ganar la sesión" (fila del resumen, aviso del día 5 y espera en modo rápido), una sola frase: "Los resultados salen cuando todos terminen." Volcado en H17, H22 y H23.
+- **Historias involucradas**: H6, H10, H16 (R6), H22; H17, H23
+- **Aviso de sesión cerrada**: R6 fija "Esta sesión ya cerró. No se movieron pulsos." (H6/H10) y "La sesión cerró. Las preguntas que faltaban cuentan como error, sin pulsos." (H16). H22 propone un tercer texto, "No jugaste esta sesión. No se movieron pulsos.", y el mapa mismo avisa del choque con H16/H17.
+- **Resultado pendiente de "ganar la sesión"**: H17 usa "Se resuelve cuando todos terminen o cierre la ventana." en la fila y "Los resultados finales salen cuando todos terminen." para el día 5; H23 propone "Los resultados de la sesión salen cuando todos terminen." para el mismo estado ("coordinar con el aviso del día 5").
+- **Por qué importa**: son el mismo concepto con tres y dos redacciones. En modo rápido H17 y H23 dibujan el mismo bloque con otra frase.
+
+### N6: Cruce de varias auras, cierre de aura y autoridad del servidor
+- **Estado**: Resuelto (PO, 23/11/2026). El servidor envía los saldos antes y después; la app solo dibuja. Un solo anuncio para lectores de pantalla (en Fin de partida, el de H19). H21 manda sobre la secuencia del aro: un solo cierre aunque se crucen varias auras, el número salta al aura final, el aro queda en el resto real con "Seguís desde N de 25 pulsos", y en pérdida el aro no usa `coral` ni rojo. Volcado en H19, H20 y H21. Sigue abierto el alcance del cierre (solo Fin de partida o también `AuraCounter`).
+- **Historias involucradas**: H19, H20, H21 (H1 por la derivación)
+- **Autoridad**: H19 lista como dato del servidor los "cruces de aura" y el "aura antes y después"; H20 lista "si hubo cierre de aura"; H21 dice que llegan solo los pulsos antes y después "para derivar si cruzó múltiplo de 25", pero en la misma sección "la app nunca calcula... si se completó un aura ni el aura final". H1 y H19 derivan `floor(pulsos/25)` y `pulsos mod 25` (sigue abierto desde la Corrida 1).
+- **Varios cruces**: H19 deja la definición a H21. H21 propone: un solo cierre, aro lleno de la primera cruzada, pulso, número salta al final y el aro queda en el resto (no a cero); texto "Seguís desde N de 25 pulsos". H19 no lista "Seguís desde" y mantiene la línea "N de 25 pulsos para tu Nª aura" en el mismo lugar donde H21 coloca su texto final.
+- **Pérdida**: H19 vacía los tramos en `coral` cada 130 ms con cuenta -N y 400 ms después los lleva a pista; H21 dice que bajar de aura es sin animación, sin rojo y "nada de `coral`/`danger-text`" en el aro. Duraciones: H19 95 ms por tramo (animación de fin de partida), H21 90 ms (animación de cierre).
+- **Anuncio accesible**: H19 "Ganaste 6 pulsos. Ahora tenés 1 aura y 22 de 25 pulsos."; H21 "Llegaste a N auras" (live region única). Dos anuncios para la misma pantalla.
+- **Alcance**: H19 dispara `AuraClose` solo en Fin de partida; H21 duda si también en cualquier `AuraCounter` visible (el DS lo sugiere).
+- **Por qué importa**: dos historias definen el aro del fin de partida con distinta fuente de verdad, distinto texto final, distinto vaciado y distinto anuncio.
+
+### N7: Textos de neto, resultado y premio en el fin de partida
+- **Estado**: Resuelto (PO, 23/11/2026). En el fin de partida manda la referencia ("Ganaste +N" / "Perdiste -N", cifra en `brand-text` / `danger-text`); R9 sigue en el resto de la app. El premio va en un bloque aparte, y el servidor informa si está incluido en el saldo. Volcado en H19 y H20. Siguen abiertos el formato del bloque de premio y el subtítulo del ganador ("Quedaste 1º de N jugadores" vs "Ganaste la partida").
+- **Historias involucradas**: H19, H20 (y H17/H4 por el patrón de neto)
+- **"Ganaste +6" / "Perdiste -5"** (H19 y H20, de la referencia) frente a "+12 pulsos ganados" / "-8 pulsos perdidos" (R9, H17, H4, MatchCard). El estado inicial de la animación muestra "+0"/"-0" (H19 lo marca).
+- **Ganador**: H19 propone "Quedaste 1º de N jugadores" (con empate "(empate)"); H20 usa "Ganaste la partida" (subtítulo de la animación) y "Premio dividido" para el empate.
+- **Premio**: H20 lo muestra como "+150 pulsos" en `brand-text` debajo de "Ganaste +N"; no queda dicho si el premio entra en el neto "Ganaste +N", en el saldo antes/después que dibuja el aro (H19) ni en el "neto de la partida" de H4.
+- **Por qué importa**: dos cifras con signo en la misma pantalla sin saber si se suman; el mismo neto tiene tres formatos.
+
+### N8: Motivo de la fila de ranking del eliminado y significado de "Tu puesto"
+- **Estado**: Resuelto (PO, 23/11/2026). Motivo de la fila: "Sin pulsos" para el expulsado y "No jugó N días" para quien no jugó (también en la fila propia). "Tu puesto" muestra siempre el neto de la partida; el neto del día va en la tarjeta de resumen de H17. Volcado en H4, H17, H18 y H22. Sigue abierto cómo se combina `data-me` con la atenuación.
+- **Historias involucradas**: H4, H17, H18, H22
+- **Fila del eliminado**: H4 propone motivo "Fuera de la partida"; H18 propone "Sin pulsos"; H22 usa "No jugó N días" para terceros y duda del texto de la fila propia ("No jugaste hoy"). H18 y H22 piden combinar `data-me` con la atenuación sin que el DS lo especifique.
+- **Tarjeta "Tu puesto"**: H4 y H22 muestran el neto de la partida ("+24 pulsos ganados", "sin cambios" por día perdido); H17 la reutiliza con el neto **del día**.
+- **Por qué importa**: la misma fila y la misma tarjeta con distinto texto y distinta cifra.
+
+## Violaciones de reglas del DS o del MVP
+- Ninguna firme en esta corrida. Ningún mapa usa más de un `Button` `brand` por pantalla (fuera de la excepción de `MatchCard`), ni variantes fuera de `brand`/`neutral`/`ghost`/`coral`, ni "apuesta"/"apostar"/"monedas" en textos de pantalla (H20 reemplaza "mejor apuesta" por "Tu mayor riesgo"), ni festejo distinto de `AuraClose`. Ninguno conserva un tope de apuesta. Ninguno hace que la app calcule Pulsos ni reciba la respuesta antes. Todas las animaciones nuevas traen versión de movimiento reducido. Los casos dudosos van en "A confirmar".
+
+## A confirmar
+Preguntas abiertas para el PO tras las resoluciones N1 a N8 (se quitaron las que esas resoluciones responden: `coral`/`danger-text` en H19, texto de H22, destino del botón de H17 y ubicación de una jugada hoy con expulsión).
+
+1. ~~**H19, "+0"/"-0" al inicio de la animación**~~ — Resuelto (PO, 23/11/2026): arranca en "0" neutro sin signo.
+2. ~~**H18, la hoja de expulsión como `Overlay` informativo**~~ — Resuelto (PO, 23/11/2026): `Overlay` informativo con un `neutral` "Ver ranking"; tocar el velo la cierra; el DS se amplió. Contexto original: el DS lo define para decisión corta y ayuda (R8: nunca para errores); la hoja es un tercer tipo y el mapa pide confirmar si necesita componente propio. Además, tocar el velo la cierra (equivale a "cancelar" en las otras `Overlay`).
+3. ~~**H18, textos de la reflexión**~~ — Resuelto (PO, 23/11/2026): la reflexión pasa a tono neutro ("Tus 3 preguntas de mayor riesgo sumaron el 80% de tu bolsa") y "pulsos" va en minúscula en todo texto de pantalla. Excepción: la etiqueta "Pulsos" bajo la cifra de `LeaderboardRow`, que viene de la referencia.
+4. **Valores fijos que deberían venir de configuración**: 25 pulsos por aura (H1, H19, H21), premio 150 (H20), 20/22 s, y duraciones de animación (90/95/130 ms) — Resuelto (23/11/2026, CLAUDE.md "todos los valores ajustables viven en configuración"): van a configuración.
+5. ~~**H21, vibración con movimiento reducido**~~ — Resuelto (PO, 23/11/2026): se mantiene; el reducido quita solo lo visual (DS, H19 y H21 actualizados). Queda para implementación confirmar la API de hápticos de Expo.
+6. ~~**H21, alcance del cierre**~~ — Resuelto (PO, 23/11/2026): solo en Fin de partida; `AuraCounter` se actualiza sin animación (DS actualizado).
+7. ~~**H3, tarjeta compacta**~~ — Resuelto (PO, 23/11/2026): tocable hacia el Detalle; próxima apertura en texto relativo con hora local ("Abre en 3 h 20 min" el mismo día, "Abre mañana 00:00", "Abre el jueves 00:00").
+8. ~~**H17, neto del día con "ganar la sesión" pendiente**~~ — Resuelto (PO, 23/11/2026): no incluye la reserva; la reserva va aparte como "Pendiente".
+9. ~~**H19, botón "Continuar"**~~ — Resuelto (PO, 23/11/2026): oculto hasta el final de la animación; aparece habilitado 500 ms después (coincide con H21).
+10. ~~**H19, cola de fin de partida**~~ — Resuelto (PO, 23/11/2026): una por vez, cada una con su "Continuar"; el último lleva al Inicio.
+11. ~~**H18/H19, push**: textos y deep link de ambas sin definir; qué abre la push de expulsión por resolución (Detalle + hoja) frente a la de fin de partida.~~ — Resuelto (PO, 23/11/2026): sin notificaciones push en el MVP; quedan pendientes post-MVP.
+12. ~~**H20, premio y logros**~~ — Resuelto (PO, 23/11/2026): "Tu mayor riesgo"; título de calibración a la V2; el eliminado ve la misma pantalla con su resultado real; premio en bloque `sun-soft` aparte bajo el neto ("+150 pulsos", empate "+37 pulsos · Premio dividido entre 4"), sin animación propia.
+13. ~~**H23, activación y señal del modo rápido**~~ — Resuelto (PO, 23/11/2026): se marca al crear la partida en la configuración del servidor, sin UI en la app; chip neutro "MODO RÁPIDO" visible para todos los jugadores; "Sesión N de 5" y "Descubrir tema" en lugar de "Abre…".
+14. ~~**H5, contenido del Historial**~~ — Resuelto (PO, 23/11/2026): una fila por día ya jugado, del más reciente al más viejo ("Día 2 · Historia · 5 de 7 aciertos · +12", neto con signo y color, 0 neutro), con las filas etiqueta/valor de H17; "Día N · No jugaste" neutro; neto sin la reserva pendiente de "ganar la sesión" ("Pendiente" en `text-muted`); sin correctas ni explicaciones; filas no tocables; vacío "Todavía no hay días anteriores" si no hay días.
+15. ~~**Patrón de error/carga (R1)**~~ — Resuelto (23/11/2026, por el DS): "Carga y error" es el patrón único para toda la app cuando se espera al servidor o falla la conexión, así que cubre H20, H21, H23 (incluida la activación del modo rápido) y las pantallas sin botón que esperan al servidor.
+
+## Sin conflictos detectados
+- Patrón de error/carga: los mapas nuevos que lo definen (H3, H5, H17, H18, H19, H22) usan el mismo texto y `neutral` "Reintentar", sin rojo; coincide con R1.
+- Ordinales: todos los mapas usan "º" (y "ª" en "2ª aura"), igual que el DS ("Vas 2º"). Los "2°" y "2o" aparecen solo como errores de tipeo de las referencias (H3, H22) y los mapas los corrigen. No hay divergencia entre mapas.
+- Sin topes de apuesta: H3, H5, H17 a H23 y los mapas viejos (máximo de "Otro" = disponibles; "Podés arriesgar hasta N pulsos" con N = disponibles en H11 y H23) son coherentes.
+- Un solo `brand` por pantalla en H17, H19, H20, H23; hoja de H18 con un solo `neutral`.
+- Autoridad del servidor en H3, H5, H17, H18, H22 y H23: coherente con "la app nunca calcula Pulsos".
+
+## Resumen
+- Historias revisadas: 21
+- Conflictos: 8 (N1 a N8), todos resueltos por el PO el 23/11/2026 y volcados en los mapas
+- Violaciones de reglas: 0
+- A confirmar: 15 (tras quitar las respondidas por N1 a N8)
+
+---
+
+# Corrida 1 (17/11/2026)
+
+Generado a partir de: component-map-H1, H2, H4, H6, H8, H9, H10, H11, H12, H13, H14, H16 (los 12 de esa corrida). Texto original, sin cambios.
 Fecha: 2026-11-17
 
-Este reporte es informativo. No elige resoluciones ni modifica los mapeos. Las resoluciones del PO están en la sección "Resoluciones (17/11/2026)" al final: mandan sobre los mapas, que quedan congelados.
+Las resoluciones del PO están en la sección "Resoluciones (17/11/2026)" al final: mandan sobre los mapas, que quedan congelados.
 
 ## Conflictos detectados
 

@@ -24,7 +24,7 @@
 
 ## Pantallas involucradas
 - Pregunta, estado "tiempo vencido" — plantilla del DS: **Pregunta** ("Al vencer el tiempo: temporizador en 0, `ResultCard` de tiempo vencido y el mismo botón").
-- Pregunta siguiente (H11/H12) — el botón "Siguiente pregunta" lleva a la pregunta 4 a 7. Tras la 7ª, H17 (resumen del día) no está disponible: provisoriamente la sesión vuelve al Detalle de partida (plantilla **Detalle de partida**) como cierre provisorio.
+- Pregunta siguiente (H11/H12) — el botón "Siguiente pregunta" lleva a la pregunta 4 a 7. Tras la 7ª, lleva al Resumen del día (H17), cuyo `brand` "Ver partida" vuelve al Detalle de partida (plantilla **Detalle de partida**) (N2, PO 23/11/2026).
 
 ## Componentes del DS a usar
 - `ProgressBar` (temporizador, tono `urgent`, valor 0) — barra `coral` y cifra "0:00" en `danger-text` con `data-tone="urgent"`.
@@ -51,8 +51,6 @@
   - **Resolución temporal sugerida**: ninguna; queda como duda (ver Riesgos).
 - **Respuesta enviada pero tardía (más de 22 s)** — el jugador sí había tocado "Responder" y quizá vio su opción como elegida; el resultado es el mismo "Se terminó el tiempo". — sin referencia sobre cómo se muestra su opción.
   - **Resolución temporal sugerida**: mostrar exactamente el mismo estado de tiempo vencido (ninguna elegida ni incorrecta), con el texto "Cuenta como error, no perdiste pulsos.".
-- **Cierre tras la 7ª pregunta** — H17 (resumen del día) no está disponible. — sin referencia.
-  - **Resolución temporal sugerida**: tras "Siguiente pregunta" en la pregunta 7, volver al Detalle de partida como fin provisorio.
 
 ## Tokens relevantes
 - Colores: `coral` (barra del temporizador a 0), `danger-text` (cifra del tiempo), `brand-soft` + `brand-deep` (correcta), `surface-2` / `text-muted` / `surface` (atenuadas), `surface` (tarjeta), `text` (título), `text-muted` ("0 pulsos" y textos de apoyo), `on-brand` + `brand` + `brand-deep` (botón), `bg`, `sky-soft` (chip de pregunta), `brand-text` no se usa (no hay ganancia).
@@ -87,6 +85,6 @@
 - **Qué pasa con `ConfidenceControl` y "Responder" al vencer**: en `Respondida.png` desaparecen; se asume lo mismo. Falta confirmar si se ocultan o se deshabilitan en el instante de llegar a 0, antes de la respuesta del servidor.
 - **Error de red al pedir el resultado**: no hay patrón de feedback definido; no se eligió ninguno para evitar inconsistencias con otras historias.
 - **Respuesta tardía con opción elegida**: no está definido si se muestra la opción como "Elegida" un instante antes de resolver; se supone que no queda ninguna marcada.
-- **Pregunta 7**: sin H17 el final es provisorio (volver al Detalle de partida).
+- **Pregunta 7**: "Siguiente pregunta" lleva al Resumen del día (H17); sigue abierto si el rótulo cambia.
 - **Foco y anuncio a 0 s**: el DS pide anunciar el tiempo en 10, 5 y 0, pero no dice si el anuncio de "Se terminó el tiempo" se combina con el del resultado.
 - **Retorno desde H16**: si el jugador vuelve tarde, ve primero este estado y sigue; el flujo depende de H16 y no se resolvió aquí.

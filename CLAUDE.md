@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Repositorio de una app móvil de trivia (nombre provisorio "Trivia confianza"), en la transición de diseño a código. La definición de producto y diseño está completa y escrita en español rioplatense (voseo). El código es solo un esqueleto: ninguna historia está implementada todavía. Remoto: `https://github.com/Manuel-llambi/Trivia` (rama `main`).
 
-Avance del pipeline del primer flujo: 21 historias en `docs/02-historias/historias.md` (H7 y H15 se eliminaron el 21 de noviembre de 2026 junto con el promedio global del tema y el reporte de preguntas; los números de las demás no se reasignan). Mapeadas en `docs/03-component-maps/`: H1, H2, H4, H6, H8–H14 y H16. Faltan mapear: H3, H5 y H17–H23.
+Avance del pipeline del primer flujo: 21 historias en `docs/02-historias/historias.md` (H7 y H15 se eliminaron el 21 de noviembre de 2026 junto con el promedio global del tema y el reporte de preguntas; los números de las demás no se reasignan). Las 21 están mapeadas en `docs/03-component-maps/` (23 de noviembre de 2026). Los conflictos entre mapas N1–N8 de `_consistency-report.md` están pendientes de decisión del PO. Desde el 23 de noviembre de 2026 no hay topes de apuesta: el único límite son los Pulsos disponibles.
 
 | Archivo / carpeta | Qué es |
 | --- | --- |
@@ -48,7 +48,7 @@ El MVP y el DS se alinearon con las referencias el 17 de noviembre de 2026. Si a
 
 ## Arquitectura planificada (según el documento del MVP)
 
-- **Stack:** Expo (React Native) + TypeScript; Supabase (Postgres, autenticación con OTP de 6 dígitos por email + apodo, funciones del servidor, tareas programadas); notificaciones push de Expo.
+- **Stack:** Expo (React Native) + TypeScript; Supabase (Postgres, autenticación con OTP de 6 dígitos por email + apodo, funciones del servidor, tareas programadas). Notificaciones push: fuera del MVP, pendientes post-MVP (23 de noviembre de 2026).
 - **Economía con autoridad en el servidor.** La app nunca calcula nada que afecte Pulsos. Envía respuestas y montos; el servidor controla el cronómetro de cada pregunta (20 s visibles, 22 s aceptados), resuelve las apuestas, y registra cada movimiento en un **libro de Pulsos**. La respuesta correcta nunca llega al cliente antes de responder.
 - **Motor de reglas como funciones puras** (pagos, ranking) con pruebas automáticas: es donde un error rompe la economía.
 - **Todos los valores ajustables viven en configuración, no en el código:** duración de la partida, preguntas por sesión, Pulsos iniciales, costo de entrada, multiplicadores de "al menos X", factor de "ganar la sesión" (0,9 × jugadores en pie; no hay pozo común), premio mayor, cortes de emblemas, tiempo por pregunta, espera de quiebra, ritmo de las sesiones y umbral de preguntas sin ver que dispara la alerta al administrador. Todos los valores de la economía son provisorios hasta correr la simulación.
@@ -64,4 +64,4 @@ El MVP y el DS se alinearon con las referencias el 17 de noviembre de 2026. Si a
 - Los elementos presionables tienen un "labio" duro de 4 px (`lip-*`) y se hunden 4 px al presionar; ver la sección 6 del DS para la técnica de sombra en iOS y vista hermana en Android.
 - Solo cuatro variantes de botón: `brand`, `neutral`, `ghost`, `coral`. Un color fuerte por pantalla.
 - **Sin estética de casino:** sin confeti, destellos, fichas, luces ni sonidos de tragamonedas. El cierre de aura (un solo pulso de 600 ms + vibración suave) es el único festejo. Respetar el movimiento reducido.
-- Ganancias y pérdidas siempre con signo y color (`+12` en `brand-text`, `-8` en `danger-text`/coral); sin rojo en el cero; textos sin culpa ("te quedaste sin Pulsos").
+- Ganancias y pérdidas siempre con signo y color (`+12` en `brand-text`, `-8` en `danger-text`/coral); sin rojo en el cero; textos sin culpa ("te quedaste sin pulsos").

@@ -26,7 +26,7 @@ Componentes verificados contra el DS, sin implementación todavía (no hay códi
 
 ## Pantallas involucradas
 
-- Inicio (dashboard), pestaña "Todas" y "Te toca" — plantilla del DS: **Inicio**. H2 cubre solo la card que toca jugar; el encabezado es H1 y el control segmentado y las cards compactas son H3 (fuera de esta corrida).
+- Inicio (dashboard), pestaña "Todas" y "Te toca" — plantilla del DS: **Inicio**. Las cards jugables van en "Te toca" y "Todas"; "Cerrada" y "Fuera de la partida" solo en "Todas" (N4, PO 23/11/2026). H2 cubre solo la card que toca jugar; el encabezado es H1 y el control segmentado y las cards compactas son H3 (fuera de esta corrida).
 - Destino de "Jugar" y "Ver ranking": Detalle de partida (H4), plantilla **Detalle de partida**, no se diseña acá.
 
 ## Componentes del DS a usar
@@ -34,7 +34,7 @@ Componentes verificados contra el DS, sin implementación todavía (no hay códi
 - `MatchCard` (estado Ganando) — bolsa 62, "+12 pulsos ganados" en `brand-text`, "Vas 2º", `Button brand` "Jugar".
 - `MatchCard` (Perdiendo) — "-8 pulsos perdidos" en `danger-text`, mismo botón.
 - `MatchCard` (Recién empieza) — bolsa igual al costo de entrada (el DS muestra 50), "sin cambios" en `text-muted`, "Todos 0".
-- `MatchCard` (Fuera de la partida) — 0, "sin pulsos" en `text-muted`, "Quedaste 4º", chip gris, `Button neutral` "Ver ranking".
+- `MatchCard` (Fuera de la partida) — 0, "sin pulsos" en `text-muted`, "Quedaste 4º", chip gris, `Button neutral` "Ver ranking". Solo en "Todas"; tiene prioridad sobre "Cerrada" (N4).
 - Chip de vencimiento (`StatPill`/chips, significado `coral` urgencia) — `coral-soft` con `danger-text`, texto `label` en mayúsculas.
 - Chip "Fuera de la partida" — gris, forma de chip del DS (`surface-2`; el DS no fija token exacto, ver gaps).
 - Avatares apilados — `avatar-sm` 32px, solape 8px, inicial en `display` sobre `brand`/`sky`/`coral`/`sun`/`violet`.
@@ -108,4 +108,4 @@ Componentes verificados contra el DS, sin implementación todavía (no hay códi
 - **Chip de vencimiento siempre rojo suave** aun con 16 h restantes: la referencia lo hace así, pero puede leerse como alarma. No se cambió.
 - **Botón "Ver ranking"**: el DS dice `neutral`; en `card_states.png` se ve blanco con borde y labio, consistente con `neutral`.
 - **Error de red / carga**: la historia no dice cómo mostrarlo; se deja como duda de patrón común (posible inconsistencia entre historias).
-- **Pestaña "Te toca" vs "Todas"**: la card es la misma, pero el comportamiento del contenedor es H3 (fuera de esta corrida).
+- **Pestaña "Te toca" vs "Todas"**: la card es la misma; el filtro por pestaña lo fija N4 (ver H3).

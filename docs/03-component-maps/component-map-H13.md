@@ -17,7 +17,7 @@ Como jugador, quiero ver que erré, cuántos pulsos perdí, cuál era la correct
 
 ## Pantallas involucradas
 - Pregunta, estado "respondida con error" — plantilla del DS: **Pregunta** (sección 4), subestado "Al responder: tiempo congelado, `ResultCard` (acierto o error) y botón Siguiente pregunta".
-- Destino del botón: siguiente Pregunta (H11) o, tras la 7ª, provisoriamente el Detalle de partida (resumen del día H17 todavía no diseñado).
+- Destino del botón: siguiente Pregunta (H11) o, tras la 7ª, el Resumen del día (H17), que lleva al Detalle de partida con `brand` "Ver partida" (N2, PO 23/11/2026).
 
 ## Componentes del DS a usar
 - `AnswerCard` (incorrecta) — la opción elegida: `coral-soft`, trazo `coral-deep`, labio `lip-coral`, cruz y palabra "Incorrecta".
@@ -44,10 +44,7 @@ Como jugador, quiero ver que erré, cuántos pulsos perdí, cuál era la correct
   - **Resolución temporal sugerida**: ocultarlo, como en la referencia, y mostrar `ResultCard` en su lugar; el botón "Responder" también desaparece.
 - Feedback si falla la red al recibir el resultado — sin definición en la historia.
   - **Resolución temporal sugerida**: no inventar patrón; ver "Riesgos y dudas".
-- Destino tras la 7ª pregunta — sin referencia (resumen del día H17 no diseñado, fuera de alcance).
-  - **Resolución temporal sugerida**: provisoriamente, "Siguiente pregunta" (o el cierre equivalente) vuelve al Detalle de partida.
-- Expulsión por bolsa en 0 (H18) — fuera de alcance de esta tanda.
-  - **Resolución temporal sugerida**: tratar el error como cualquier otro; H13 no muestra nada extra de expulsión. La hoja aparece al abrir la partida o por push.
+- Expulsión por bolsa en 0 (H18) — resuelto por el PO (N3, 23/11/2026): si la bolsa llega a 0 en esta pregunta, la sesión termina ahí y la hoja de expulsión aparece directamente, sin resumen del día; su cierre lleva al Detalle de partida. El `ResultCard` de error no cambia.
 
 ## Tokens relevantes
 - Colores: `coral-soft` (fondo de la elegida; `#ffe1e6` light), `coral-deep` (trazo), `danger-text` (`#c0273f` light / `#ff8fa0` dark: palabra "Incorrecta", ícono y `-N pulsos`), `brand-soft` + `brand-deep` (correcta), `surface-2` y `text-muted` (atenuadas y "0 pulsos"), `surface` (ResultCard), `bg`, `text`, `sky-soft` (chip), `forest`/`brand` (pasos), `on-brand` sobre el botón. Contrastes `danger-text` sobre `coral-soft`: 4,76:1 light, 7,17:1 dark (pasa).
@@ -83,6 +80,6 @@ Como jugador, quiero ver que erré, cuántos pulsos perdí, cuál era la correct
 - Error de red al enviar o recibir el resultado: la historia no dice cómo mostrarlo (toast, banner o pantalla). No se eligió patrón; hay que decidirlo de forma común con H12 y H14.
 - Plural y cero: "-1 pulsos" o "-1 pulso"; los textos del DS siempre dicen "pulsos". Confirmar si se singulariza el 1.
 - Timer congelado con 5 s o menos: no está definido si la barra se queda en `coral` (tono urgente) o vuelve a `brand` al responder. Conservador: mantener el tono que tenía al responder.
-- Tras la 7ª pregunta, "Siguiente pregunta" no tiene destino definitivo (H17 fuera de alcance); el rótulo del botón tal vez deba cambiar en esa última pregunta.
-- Expulsión (H18) fuera de alcance: no queda definido qué ve el jugador si este error deja la bolsa total en 0 en medio de una sesión; la regla del MVP dice que se entera al abrir la partida o por push, así que H13 no muestra aviso.
+- Tras la 7ª pregunta, "Siguiente pregunta" lleva al Resumen del día (H17); sigue abierto si el rótulo del botón cambia en esa última pregunta.
+- Expulsión (H18) fuera de alcance: no queda definido qué ve el jugador si este error deja la bolsa total en 0 en medio de una sesión; la regla del MVP dice que se entera al abrir la partida, así que H13 no muestra aviso.
 - Componentes verificados contra el DS, sin implementación todavía (no hay código en el repo).

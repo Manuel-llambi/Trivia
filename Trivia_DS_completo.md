@@ -123,7 +123,7 @@ La moneda de la app es el **aura**. Un aura es un aro completo y se arma con **2
 ### Movimiento
 
 - Presionar baja el elemento 4px en 100ms. La revelación del tema pasa los temas rápido y frena en 2,4s, una vez por sesión, sin vibración.
-- La vibración suave es exclusiva de `AuraClose`; ningún otro momento vibra.
+- La vibración suave es exclusiva de `AuraClose`; ningún otro momento vibra. Con movimiento reducido se mantiene: se quita solo lo visual (decisión del 23 de noviembre de 2026).
 - Con `prefers-reduced-motion`, quitá transiciones y revelá el tema sin movimiento.
 
 ### Accesibilidad
@@ -370,7 +370,7 @@ Contador de aura del encabezado: ocupa el lugar de la antigua pastilla de moneda
 
 - Una pastilla de `tap-min` de alto con un aro de 40px a la izquierda y, al lado, los pulsos del aura en curso ("16/25"). El número dentro del aro es el aura actual. El emblema va junto a la pastilla.
 - Fondo `aura-pill-on-forest`, borde `aura-pill-line-on-forest`, texto `on-forest` y `on-forest-muted`.
-- Al tocarla se abre la pantalla "Tu aura". Cuando suman pulsos, los tramos se llenan de a uno; al completar el aro corre el cierre de aura (ver AuraClose). Cuando restan, los tramos se vacían sin animación y, si corresponde, el número y el emblema bajan.
+- Al tocarla se abre la pantalla "Tu aura". Cuando suman pulsos, los tramos y el número se actualizan sin animación: el cierre de aura corre solo en Fin de partida (decisión del 23 de noviembre de 2026; ver AuraClose). Cuando restan, los tramos se vacían sin animación y, si corresponde, el número y el emblema bajan.
 - Cuenta solo los pulsos libres: entrar a una partida saca 50 pulsos y baja el contador; la bolsa final vuelve al terminar la partida.
 - `aria-label` completo: "Tu aura: 1, 16 de 25 pulsos para la siguiente".
 - Alternativas que se descartaron: solo el aro de 52px, y una pastilla con texto ("1 aura / 16 de 25 pulsos"), más clara pero más ancha.
@@ -445,13 +445,14 @@ Tarjeta que aparece al responder, debajo de las opciones. Referencia: `Pregunta/
 
 ### Overlay (aviso sobre la pantalla)
 
-Aviso que se abre sobre la pantalla oscurecida para una decisión corta del jugador o para una ayuda; nunca para errores (los errores usan "Carga y error"). Lo usan el monto "Otro" de `ConfidenceControl`, el botón cerrar de la pregunta y el botón de ayuda "?" de la confianza en el tema. Es una capa aparte: puede tener su propio botón principal aunque la pantalla de fondo ya tenga uno. Detalle visual provisorio: todavía no tiene imagen de referencia.
+Aviso que se abre sobre la pantalla oscurecida para una decisión corta del jugador, una ayuda o un aviso informativo; nunca para errores (los errores usan "Carga y error"). Lo usan el monto "Otro" de `ConfidenceControl`, el botón cerrar de la pregunta, el botón de ayuda "?" de la confianza en el tema y la hoja de expulsión. Es una capa aparte: puede tener su propio botón principal aunque la pantalla de fondo ya tenga uno. Detalle visual provisorio: todavía no tiene imagen de referencia.
 
 - Un velo (scrim) oscurece la pantalla de fondo; encima, una tarjeta `surface` con `radius-lg` y `shadow-float`. Título en `display`, contenido y uno o dos botones de las cuatro variantes.
 - Tocar el velo equivale a la acción de cancelar.
 - **Monto "Otro":** "¿Cuántos pulsos arriesgás?", campo numérico con foco automático y teclado numérico, ayuda "Podés arriesgar hasta N pulsos" en `text-muted`, botones "Guardar" (`brand`) y "Cancelar" (`ghost`). Ver `ConfidenceControl`.
 - **Salir de la sesión:** "¿Salir de la sesión?", el texto "Podés volver mientras la sesión siga abierta. El tiempo de esta pregunta sigue corriendo." y los botones "Salir" (`coral`) y "Seguir jugando" (`neutral`). Al volver, el jugador va directo a la pregunta que estaba en pantalla si todavía tiene tiempo, o a la siguiente pendiente, sin pantalla intermedia; si la que dejó venció, primero la ve en el estado de tiempo vencido de `ResultCard` y después sigue.
 - **Ayuda de la confianza:** "¿Cómo funciona la confianza?", tres líneas: "Ganar la sesión: si hoy acertás más que el resto, cobrás tu monto por el multiplicador.", "Acertar al menos X de las 7: elegí cuántas creés que vas a acertar; cuanto más alto, más paga." y "Los pulsos que pongas se reservan al tocar Jugar la sesión. Poner 0 también vale." Un solo botón `neutral` "Entendido".
+- **Hoja de expulsión (aviso informativo, decisión del 23 de noviembre de 2026):** título, qué pasó, qué sigue y la reflexión, con un solo botón `neutral` "Ver ranking". Tocar el velo la cierra igual que el botón y deja al jugador en el Detalle de partida. Sin íconos de alarma ni animación. Ver el mapa de H18.
 - Sin culpa ni rojo: el aviso informa, no reprocha.
 
 ### Carga y error (patrón)

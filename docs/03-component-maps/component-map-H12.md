@@ -6,7 +6,7 @@ Como jugador, quiero ver que acerté, cuántos pulsos gané y la explicación, p
 - Referencia visual: `Pantalla-UI/Pregunta/Respondida.png`.
 - Se congela el tiempo, la opción correcta (la elegida) muestra tilde y "Correcta", las demás se atenúan sin labio.
 - Tarjeta de resultado: "Acertaste", movimiento con signo ("+5 pulsos") y explicación.
-- "Siguiente pregunta" lleva a la próxima; después de la 7ª, el flujo vuelve al detalle de partida como cierre **provisorio** (el resumen del día H17 todavía no está diseñado).
+- "Siguiente pregunta" lleva a la próxima; después de la 7ª, el flujo lleva al Resumen del día (H17), cuyo `brand` "Ver partida" vuelve al Detalle de partida (resuelto por el PO, N2, 23/11/2026).
 - Monto 0: el movimiento se muestra sin rojo (texto exacto sin referencia).
 - Servidor: devuelve si fue correcta, la opción correcta, la explicación y el movimiento del libro de Pulsos; la correcta llega recién después de responder.
 - Experiencia: sin festejos; si la ganancia completa un aura no corre `AuraClose` (los pulsos de la bolsa no suman al contador general). Movimiento reducido: la tarjeta aparece sin transición.
@@ -22,7 +22,7 @@ Componentes verificados contra el DS, sin implementación todavía (no hay códi
 
 ## Pantallas involucradas
 - Pregunta, estado "respondida: acierto" — plantilla del DS: **Pregunta** (rama "Al responder: tiempo congelado, `ResultCard` y botón Siguiente pregunta").
-- Detalle de partida — plantilla del DS: **Detalle de partida**; destino provisorio tras la 7ª pregunta.
+- Resumen del día (H17) — destino tras la 7ª pregunta; desde ahí, `brand` "Ver partida" al **Detalle de partida** (en modo rápido, "Descubrir tema", H23).
 
 ## Componentes del DS a usar
 - `AnswerCard` (correcta) — la opción elegida: `brand-soft`, trazo y labio `brand-deep`, disco de letra `brand`, tilde y "Correcta".
@@ -38,12 +38,10 @@ Componentes verificados contra el DS, sin implementación todavía (no hay códi
 - `ResultCard` — el DS lo define como bloque estático; falta la regla de anuncio a lector de pantalla cuando aparece (ver Patrones).
 
 ## Gaps
-- Destino tras la 7ª pregunta (resumen del día H17) — sin referencia (listado en "Faltan en las referencias" del MVP).
-  - **Resolución temporal sugerida**: "Siguiente pregunta" en la 7ª vuelve al Detalle de partida, como fin provisorio, hasta que se diseñe H17. Señalar como provisorio.
 - Texto del movimiento con monto 0 en acierto — sin referencia (la historia dice "texto exacto sin referencia").
   - **Resolución temporal sugerida**: "0 pulsos" en `text-muted`, sin signo ni color de ganancia, igual que el estado Error con monto 0 del DS. Provisorio. Nota: con monto 0 "acertar paga el doble" da 0, o sea que hay que confirmar si el título sigue siendo "Acertaste".
 - Variante del rótulo del botón en la 7ª pregunta — no existe en el DS ("Siguiente pregunta" no tiene sentido después de la última).
-  - **Resolución temporal sugerida**: mantener "Siguiente pregunta" (como dice la historia) y no inventar un rótulo nuevo hasta H17.
+  - **Resolución temporal sugerida**: mantener "Siguiente pregunta" (como dice la historia) y no inventar un rótulo nuevo; el botón lleva al Resumen del día (H17).
 - Error de red al pedir el resultado / reconexión tras corte — sin referencia.
   - **Resolución temporal sugerida**: no inventar patrón; ver "Riesgos y dudas".
 
@@ -79,7 +77,7 @@ Componentes verificados contra el DS, sin implementación todavía (no hay códi
 
 ## Riesgos y dudas
 - **Acierto con monto 0**: el pago es 0, así que no hay ganancia. No está definido si el título sigue siendo "Acertaste" ni el texto del movimiento; se propuso "0 pulsos" en `text-muted`, a confirmar.
-- **Destino tras la 7ª**: provisorio al Detalle de partida hasta que exista H17; conviene decidir si el rótulo del botón cambia.
+- **Rótulo en la 7ª**: el destino ya está definido (Resumen del día, H17); sigue abierto si el rótulo del botón cambia.
 - **Error de red / reconexión**: el caso borde dice "al volver, la app muestra el resultado", pero no define cómo se muestra el estado de carga o de fallo al pedir el resultado; no se eligió patrón.
 - **Temporizador congelado**: si se respondió con 5 s o menos, la referencia no aclara si el tono `urgent` (coral) persiste en el estado congelado; el DS define coral solo en el estado "tiempo vencido".
 - **Botón cerrar con el resultado visible**: la referencia lo mantiene; qué pasa si se toca con la pregunta ya respondida (el "El tiempo sigue corriendo" del `Overlay` ya no aplica) no está definido.
