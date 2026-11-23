@@ -45,11 +45,11 @@ export interface RulesConfig {
   readonly acceptedAnswerMs: number;
   /**
    * Max stake per question, on top of the available Pulsos. Null = no cap.
-   * MVP: 10. Without a cap, stakes compound and the economy inflates
-   * exponentially (see sim/).
+   * MVP: null (PO decision 2026-11-23). Without a cap, stakes compound and the
+   * economy inflates (see sim/).
    */
   readonly questionStakeCap: Pulsos | null;
-  /** Max stake per topic card ("win the session", "at least X"). Null = no cap. MVP: 10. */
+  /** Max stake per topic card ("win the session", "at least X"). Null = no cap. MVP: null. */
   readonly topicStakeCap: Pulsos | null;
   /** Pulsos moved from the general counter into the bag. MVP: 50. */
   readonly entryCost: Pulsos;

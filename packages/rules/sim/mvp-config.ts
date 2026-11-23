@@ -9,10 +9,12 @@ export const MVP_CONFIG: RulesConfig = {
   questionsPerSession: 7,
   visibleAnswerMs: 20_000,
   acceptedAnswerMs: 22_000,
-  // Adopted 2026-11-21 after the simulation: uncapped stakes compound and
-  // inflate the economy ~9x. Both caps are provisional.
-  questionStakeCap: 10,
-  topicStakeCap: 10,
+  // No stake caps: PO decision on 2026-11-23, the only limit is the Pulsos the
+  // player has available. The simulation showed uncapped stakes create ~9x
+  // more Pulsos per match (~9,500 vs ~1,100 with caps of 10/10, normal
+  // topics); that cost was accepted. The mechanism stays configurable.
+  questionStakeCap: null,
+  topicStakeCap: null,
   entryCost: 50,
   pulsosPerAura: 25,
   atLeastTiers: [

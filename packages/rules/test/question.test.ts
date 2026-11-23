@@ -6,7 +6,7 @@ import {
   maxQuestionStake,
   settleQuestion,
 } from '../src/question.ts';
-import { mvpConfig, uncappedConfig } from './fixtures.ts';
+import { cappedConfig, mvpConfig } from './fixtures.ts';
 
 const answered = (correct: boolean, stake: number, elapsedMs = 8_000) =>
   ({ kind: 'answered', correct, stake, elapsedMs }) as const;
@@ -72,11 +72,11 @@ describe('isValidQuestionStake', () => {
 
   it('accepts 0 and any whole amount up to the available Pulsos', () => {
     expect(isValidQuestionStake(0, bag, mvpConfig)).toBe(true);
-    expect(isValidQuestionStake(57, bag, uncappedConfig)).toBe(true);
+    expect(isValidQuestionStake(57, bag, mvpConfig)).toBe(true);
   });
 
   it('rejects amounts above the available Pulsos (bag never goes negative)', () => {
-    expect(isValidQuestionStake(58, bag, uncappedConfig)).toBe(false);
+    expect(isValidQuestionStake(58, bag, mvpConfig)).toBe(false);
   });
 
   it('only allows 0 when everything is reserved', () => {
@@ -94,26 +94,30 @@ describe('isValidQuestionStake', () => {
 });
 
 describe("question stake cap", () => {
-  const capped = { ...uncappedConfig, questionStakeCap: 10 };
   const bag = { total: 62, reserved: 5 };
 
   it("limits the max stake to the cap when the bag allows more", () => {
-    expect(maxQuestionStake(bag, capped)).toBe(10);
-    expect(isValidQuestionStake(10, bag, capped)).toBe(true);
-    expect(isValidQuestionStake(11, bag, capped)).toBe(false);
+    expect(maxQuestionStake(bag, cappedConfig)).toBe(10);
+    expect(isValidQuestionStake(10, bag, cappedConfig)).toBe(true);
+    expect(isValidQuestionStake(11, bag, cappedConfig)).toBe(false);
   });
 
   it("still limits to the available Pulsos when they are below the cap", () => {
-    expect(maxQuestionStake({ total: 8, reserved: 2 }, capped)).toBe(6);
+    expect(maxQuestionStake({ total: 8, reserved: 2 }, cappedConfig)).toBe(6);
   });
 
   it("has no cap when the config says null", () => {
-    expect(maxQuestionStake(bag, uncappedConfig)).toBe(57);
+    expect(maxQuestionStake(bag, mvpConfig)).toBe(57);
   });
 });
 
-describe("adopted MVP caps", () => {
-  it("caps question stakes at 10", () => {
-    expect(maxQuestionStake({ total: 62, reserved: 0 }, mvpConfig)).toBe(10);
+describe("MVP config (no caps, 2026-11-23)", () => {
+  it("has no question or topic stake cap", () => {
+    expect(mvpConfig.questionStakeCap).toBeNull();
+    expect(mvpConfig.topicStakeCap).toBeNull();
+  });
+
+  it("lets a question stake use all the available Pulsos", () => {
+    expect(maxQuestionStake({ total: 62, reserved: 0 }, mvpConfig)).toBe(62);
   });
 });

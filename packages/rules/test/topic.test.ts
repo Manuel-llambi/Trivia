@@ -7,7 +7,7 @@ import {
   settleAtLeast,
 } from '../src/topic.ts';
 import type { QuestionSubmission } from '../src/types.ts';
-import { mvpConfig, uncappedConfig } from './fixtures.ts';
+import { cappedConfig, mvpConfig } from './fixtures.ts';
 
 const bag = { total: 62, reserved: 0 };
 
@@ -18,12 +18,12 @@ describe('isValidTopicStakes', () => {
 
   it('accepts both stakes when their sum fits in the available Pulsos', () => {
     const stakes = { winSession: 30, atLeast: { threshold: 5, stake: 32 } };
-    expect(isValidTopicStakes(stakes, bag, uncappedConfig)).toBe(true);
+    expect(isValidTopicStakes(stakes, bag, mvpConfig)).toBe(true);
   });
 
   it('rejects stakes whose sum exceeds the available Pulsos', () => {
     const stakes = { winSession: 30, atLeast: { threshold: 5, stake: 33 } };
-    expect(isValidTopicStakes(stakes, bag, uncappedConfig)).toBe(false);
+    expect(isValidTopicStakes(stakes, bag, mvpConfig)).toBe(false);
   });
 
   it('only allows the configured thresholds (4 to 7)', () => {
@@ -34,7 +34,7 @@ describe('isValidTopicStakes', () => {
   });
 
   it('limits each card to the topic stake cap when configured', () => {
-    const capped = { ...uncappedConfig, topicStakeCap: 10 };
+    const capped = cappedConfig;
     expect(isValidTopicStakes({ winSession: 10, atLeast: { threshold: 5, stake: 10 } }, bag, capped)).toBe(
       true,
     );
